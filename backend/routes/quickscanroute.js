@@ -90,7 +90,7 @@ router.post("/send-email", async (req, res) => {
 });
 
 // Get Scan History and Stats for Dashboard
-router.get("/history", async (req, res) => {
+router.get("/quickscan_dashboard", async (req, res) => {
   const { userId } = req.query;
 
   try {
