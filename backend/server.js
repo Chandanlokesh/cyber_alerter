@@ -1,31 +1,44 @@
 const express = require('express');
 const mongoose = require('mongoose');
-const session = require('express-session');
-const userRoutes = require('./routes/users');
-const dashboardRoutes = require('./routes/dashboard');
-const upgradePlanRoutes = require('./routes/upgradeplan');
-const app = express();
-const port = 3000;
+const cors = require('cors');
+const path = require('path');
 
-// Middlewares
-app.use(express.json());
-app.use(session({
-    secret: 'your-secret-key',  // Change to a secure key in production
-    resave: false,
-    saveUninitialized: true
-}));
+const app = express();
+
+// Middleware
+app.use(cors());
+app.use(express.json());  // Built-in Express JSON parser (simpler alternative)
+app.use(express.urlencoded({ extended: true }));
 
 // Routes
+const userRoutes = require('./routes/users');
+const quickScanRoutes = require('./routes/quickscanroute');
+
 app.use('/users', userRoutes);
-app.use('/dashboard', dashboardRoutes);
-app.use('/upgrade', upgradePlanRoutes);
+app.use('/quickscan', quickScanRoutes);
 
-// Database connection
-mongoose.connect('mongodb://localhost:27017/cyber_alerter', { useNewUrlParser: true, useUnifiedTopology: true })
-    .then(() => console.log('Connected to MongoDB'))
-    .catch((error) => console.error('Error connecting to MongoDB:', error));
+// Direct MongoDB connection URI (replace this with your actual MongoDB URI)
+const mongoURI = 'mongodb://localhost:27017/cyber_alerter';  // Local MongoDB URI
 
-// Server start
-app.listen(port, () => {
-    console.log(`Server running at http://localhost:${port}`);
+// Connect to MongoDB
+mongoose.connect(mongoURI, { 
+  useNewUrlParser: true, 
+  useUnifiedTopology: true 
+})
+.then(() => {
+  console.log('Database connected successfully');
+})
+.catch((error) => {
+  console.error('Error connecting to the database:', error);
+});
+
+// Default route
+app.get('/', (req, res) => {
+  res.send('Cyber Alerter Backend is running!');
+});
+
+// Set up the server
+const PORT = 5000;  // You can specify any port
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
 });
