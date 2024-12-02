@@ -78,14 +78,14 @@ router.post("/login", async (req, res) => {
 
     const token = jwt.sign({ userId: user._id }, JWT_SECRET, { expiresIn: "1h" });
 
-    res.status(200).json({ message: "Login successful", token });
+    res.status(200).json({ message: "Login successful", data:{token, userId:user._id} });
   } catch (error) {
     res.status(500).json({ message: "Error logging in", error });
   }
 });
 
 // Get User Details for Dashboard (Protected route)
-router.get("/dashboard", verifyToken, async (req, res) => {
+router.get("/user_profile", verifyToken, async (req, res) => {
   const userId = req.userId;  // Get userId from the token
 
   try {
@@ -96,11 +96,14 @@ router.get("/dashboard", verifyToken, async (req, res) => {
     }
 
     res.status(200).json({
+      status:"Dashboard data retrieved successfully",
+      data:{
       username: user.username,
       email: user.email,
       subscriptionPlan: user.subscriptionPlan,
       scanLimit: user.scanLimit,
       scansPerformedToday: user.scansPerformedToday,
+      }
     });
   } catch (error) {
     res.status(500).json({
@@ -112,7 +115,7 @@ router.get("/dashboard", verifyToken, async (req, res) => {
 
 // Upgrade Plan Route (Protected route)
 router.post("/upgrade", verifyToken, async (req, res) => {
-  const userId = req.userId;  // Get userId from the token
+  const userId = req.userId;
 
   try {
     const user = await User.findById(userId);
@@ -125,7 +128,12 @@ router.post("/upgrade", verifyToken, async (req, res) => {
     }
 
     user.subscriptionPlan = "Pro";
-    user.scanLimit = 20;
+
+    // Adjust based on scanLimit schema
+    user.scanLimit = {
+      quickScan: 20,  // Example for object type
+      monitorScan: 10,
+    };
 
     await user.save();
 
