@@ -22,22 +22,22 @@ def main():
         output = [
             {
                 "cve_id": cve_id,
-                "vulnerabilityDescription": f"Dummy gjgjkhkhk for {product_name} version {product_version}.",
+                "vulnerabilityDescription": f"Dummy aaaaaaaaaaak for {product_name} version {product_version}.",
                 "published_date": "2024-08-01",
                 "last_modified": "2024-09-02",
                 "vuln_status": "Active",
                 "baseScore": "9.5",
-                "baseSeverity": "medium",
+                "baseSeverity": "high",
                 "oemUrl": "https://example.com/vulnerability-details"
             },
                         {
                 "cve_id": cve_id,
-                "vulnerabilityDescription": f"gkhkhkhkhty for {product_name} version {product_version}.",
+                "vulnerabilityDescription": f"gaaaakhty for {product_name} version {product_version}.",
                 "published_date": "2024-01-01",
                 "last_modified": "2024-01-02",
                 "vuln_status": "Active",
                 "baseScore": "3.5",
-                "baseSeverity": "low",
+                "baseSeverity": "critical",
                 "oemUrl": "https://example.com/vulnerability-details"
             }
         ]

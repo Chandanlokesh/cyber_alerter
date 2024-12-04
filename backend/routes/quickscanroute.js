@@ -164,10 +164,10 @@ router.get("/quickscan_dashboard", async (req, res) => {
     // Fetch all scans for the user
     const scans = await Scan.find({ userId });
     const scansToday = scans.filter((scan) => {
-      const scanDate = new Date(scan.createdAt);
+      const scanDate = new Date(scan.scanDate);
       return scanDate.toDateString() === new Date().toDateString();
     });
-
+    
     // Fetch user data and ensure userId is converted to ObjectId
     const user = await User.findById(new mongoose.Types.ObjectId(userId));
     if (!user) {
@@ -189,10 +189,14 @@ router.get("/quickscan_dashboard", async (req, res) => {
 
     // Return the response with the necessary data
     res.status(200).json({
+      message:"success",
+      data:{
+        dashboard:{
       scansToday: scansToday.length,
       scansLeftToday,
-      severityCount,
+      severityCount},
       scansHistory: scans,
+      }
     });
   } catch (err) {
     console.error("Dashboard error:", err);
