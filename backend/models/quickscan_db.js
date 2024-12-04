@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
 const quickScanSchema = new mongoose.Schema({
-  userId: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true }, // Reference to the user
+  userId: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true }, 
   productName: { type: String, required: true },
   productVersion: { type: String, default: null },
   cveId: { type: String, default: null },
@@ -9,8 +9,8 @@ const quickScanSchema = new mongoose.Schema({
     {
       cveId: { type: String, default: "CVE-xxxx-xxxx" },
       description: { type: String, default: "N/A" },
-      publishedDate: { type: Date, default: null }, // Allow null instead of "N/A"
-      lastModified: { type: Date, default: null }, // Allow null instead of "N/A"
+      publishedDate: { type: Date, default: null }, 
+      lastModified: { type: Date, default: null }, 
       vulnStatus: { type: String, default: "N/A" },
       baseScore: { type: Number, default: "N/A" },
       baseSeverity: {

@@ -65,7 +65,7 @@ router.post("/scan", async (req, res) => {
         }
 
         // Respond with scan results
-        res.status(200).json({ message: "Scan completed successfully", scanResults });
+        res.status(200).json({ message: "Scan completed successfully", scanResults, scanId: scan._id });
       } catch (err) {
         console.error("Error processing scan results:", err);
         res.status(500).json({ message: "Error processing scan results", error: err.message });
