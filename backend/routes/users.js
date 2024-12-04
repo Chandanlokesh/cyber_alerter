@@ -101,6 +101,7 @@ router.get("/user_profile", verifyToken, async (req, res) => {
       username: user.username,
       email: user.email,
       subscriptionPlan: user.subscriptionPlan,
+      //dashboard data
       scanLimit: user.scanLimit,
       scansPerformedToday: user.scansPerformedToday,
       }

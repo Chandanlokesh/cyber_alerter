@@ -1,151 +1,205 @@
 const express = require("express");
-const { exec } = require("child_process");
-const Scan = require("../models/quickscan_db");  // Assuming a model for scan results
-const User = require("../models/users_db");  // Assuming a model for users
+const { spawn, exec } = require("child_process");
+const mongoose = require('mongoose');
 const path = require("path");
 const router = express.Router();
+const Scan = require("../models/quickscan_db"); // Scan database model
+const User = require("../models/users_db");   // User database model
 
+// Quick Scan Route
 router.post("/scan", async (req, res) => {
   const { userId, productName, productVersion, cveId } = req.body;
 
   try {
-    // Prepare the input data to send to Python script
-    const scanData = { productName, productVersion, cveId };
-    const scanDataJson = JSON.stringify(scanData);
+    // Prepare data to send to Python script
+    const scanData = JSON.stringify({ productName, productVersion, cveId });
+    const pythonScriptPath = path.join(__dirname, "../quick_py/quickscrap.py");
 
-    // Trigger the Python script using exec
-    exec(
-      `python ${path.join(__dirname, "../quick_py/quickscrap.py")} '${scanDataJson}'`,
-      (error, stdout, stderr) => {
-        if (error) {
-          return res.status(500).json({ message: "Error executing Python script", error });
-        }
+    // Spawn Python process
+    const pythonProcess = spawn("python", [pythonScriptPath]);
 
-        // Parse the output from the Python script (assuming it's in JSON format and is an array of results)
-        try {
-          const scanResults = JSON.parse(stdout);
+    // Send data to Python script via stdin
+    pythonProcess.stdin.write(scanData);
+    pythonProcess.stdin.end();
 
-          if (!Array.isArray(scanResults) || scanResults.length === 0) {
-            return res.status(400).json({ message: "No valid scan results returned" });
-          }
+    let pythonOutput = "";
+    let pythonError = "";
 
-          // Store the scan results in the database
-          const scan = new Scan({
-            userId,
-            productName,
-            productVersion,
-            cveId,
-            results: scanResults, // Save all results as an array
-          });
+    // Capture Python output
+    pythonProcess.stdout.on("data", (data) => {
+      pythonOutput += data.toString();
+    });
 
-          scan.save()
-            .then(async () => {
-              // Update user's scan count in the database
-              const user = await User.findById(userId);
-              if (user) {
-                user.scansPerformedToday.quickScan += 1;
-                await user.save();
-              } else {
-                console.warn("User not found while updating scan count");
-              }
+    // Capture Python errors
+    pythonProcess.stderr.on("data", (data) => {
+      pythonError += data.toString();
+    });
 
-              res.status(200).json({
-                message: "Scan completed and results saved",
-                scanResults,
-              });
-            })
-            .catch((err) => {
-              res.status(500).json({ message: "Error saving scan results", err });
-            });
-        } catch (jsonError) {
-          console.error("Error parsing Python script output", jsonError);
-          return res.status(500).json({
-            message: "Error parsing Python script output",
-            jsonError,
-          });
-        }
+    // Handle Python script exit
+    pythonProcess.on("close", async (code) => {
+      if (code !== 0 || pythonError) {
+        console.error("Python script error:", pythonError);
+        return res.status(500).json({
+          message: "Python script execution failed",
+          error: pythonError.trim() || `Exited with code ${code}`,
+        });
       }
-    );
-  } catch (error) {
-    console.error("Error starting scan", error);
-    res.status(500).json({ message: "Error starting scan", error });
+
+      try {
+        // Parse Python output
+        const scanResults = JSON.parse(pythonOutput);
+
+        if (!Array.isArray(scanResults) || scanResults.length === 0) {
+          return res.status(400).json({ message: "No valid results returned from scan" });
+        }
+
+        // Save scan results to the database
+        const scan = new Scan({ userId, productName, productVersion, cveId, results: scanResults });
+        await scan.save();
+
+        // Update user scan count
+        const user = await User.findById(userId);
+        if (user) {
+          user.scansPerformedToday.quickScan += 1;
+          await user.save();
+        }
+
+        // Respond with scan results
+        res.status(200).json({ message: "Scan completed successfully", scanResults });
+      } catch (err) {
+        console.error("Error processing scan results:", err);
+        res.status(500).json({ message: "Error processing scan results", error: err.message });
+      }
+    });
+  } catch (err) {
+    console.error("Scan initiation error:", err);
+    res.status(500).json({ message: "Error initiating scan", error: err.message });
   }
 });
 
-// Trigger Send Email for Scan Results
+// Send email route
 router.post("/send-email", async (req, res) => {
   const { userId, scanId } = req.body;
 
   try {
-    // Find the scan details by ID
-    const scan = await Scan.findById(scanId);
-    if (!scan) {
-      return res.status(404).json({ message: "Scan not found" });
-    }
-
-    // Trigger the Python email script
-    const emailData = {
-      userId,
-      scanDetails: scan,
-    };
-
-    exec(
-      `python ${path.join(__dirname, "../sendemail/send_email.py")} '${JSON.stringify(emailData)}'`,
-      (error, stdout, stderr) => {
-        if (error) {
-          return res.status(500).json({ message: "Error executing send email script", error });
-        }
-
-        res.status(200).json({ message: "Email sent successfully", result: stdout });
-      }
-    );
-  } catch (error) {
-    res.status(500).json({ message: "Error sending email", error });
-  }
-});
-
-// Get Scan History and Stats for Dashboard
-router.get("/quickscan_dashboard", async (req, res) => {
-  const { userId } = req.query;
-
-  try {
-    // Fetch user's scan history
-    const scans = await Scan.find({ userId });
-
-    const scansToday = scans.filter((scan) => {
-      const scanDate = new Date(scan.createdAt);
-      const today = new Date();
-      return scanDate.toDateString() === today.toDateString();
-    });
-
-    // Fetch user details for remaining scans today
+    // Fetch user details using userId
     const user = await User.findById(userId);
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
 
-    const scansLeftToday = user.scanLimit.quickScan - user.scansPerformedToday.quickScan;
+    // Fetch scan details using the scanId
+    const scan = await Scan.findOne({ _id: scanId });
+    if (!scan) {
+      return res.status(404).json({ message: "Scan not found" });
+    }
 
-    // Prepare data for the graph
+    // Prepare the email data
+    const emailData = {
+      userEmail: user.email,
+      scanDetails: scan,
+    };
+
+    // Convert email data to JSON string for Python script
+    const emailDataString = JSON.stringify(emailData);
+    const pythonScriptPath = path.join(__dirname, "../sendemail/send_email.py");
+
+    // Spawn Python process
+    const pythonProcess = spawn("python", [pythonScriptPath]);
+
+    // Send data to Python script via stdin
+    pythonProcess.stdin.write(emailDataString);
+    pythonProcess.stdin.end();
+
+    let pythonOutput = "";
+    let pythonError = "";
+
+    // Capture Python output
+    pythonProcess.stdout.on("data", (data) => {
+      pythonOutput += data.toString();
+    });
+
+    // Capture Python errors
+    pythonProcess.stderr.on("data", (data) => {
+      pythonError += data.toString();
+    });
+
+    // Handle Python script exit
+    pythonProcess.on("close", async (code) => {
+      if (code !== 0 || pythonError) {
+        console.error("Python script error:", pythonError);
+        return res.status(500).json({
+          message: "Python script execution failed",
+          error: pythonError.trim() || `Exited with code ${code}`,
+        });
+      }
+
+      // Respond with success message
+      res.status(200).json({
+        message: "Email sent successfully",
+        result: pythonOutput.trim(),
+      });
+    });
+  } catch (err) {
+    console.error("Send email error:", err);
+    res.status(500).json({ message: "Error sending email", error: err.message });
+  }
+});
+
+
+
+
+router.get("/quickscan_dashboard", async (req, res) => {
+  console.log("Request query parameters:", req.query);  // Log all query parameters
+
+  const { userId } = req.query;
+
+  if (!userId) {
+    return res.status(400).json({ message: "UserId is required in query parameters" });
+  }
+
+  console.log("UserId received:", userId);  // Log the received userId for debugging
+
+  try {
+    // Fetch all scans for the user
+    const scans = await Scan.find({ userId });
+    const scansToday = scans.filter((scan) => {
+      const scanDate = new Date(scan.createdAt);
+      return scanDate.toDateString() === new Date().toDateString();
+    });
+
+    // Fetch user data and ensure userId is converted to ObjectId
+    const user = await User.findById(new mongoose.Types.ObjectId(userId));
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    // Calculate the remaining scans for the day
+    const scansLeftToday = user.scanLimit.quickScan - user.scansPerformedToday.quickScan;
+    
+    // Count vulnerabilities based on severity
     const severityCount = { High: 0, Medium: 0, Low: 0, Critical: 0 };
     scans.forEach((scan) => {
-      scan.scanResults.forEach((result) => {
-        const severity = result.severity;
-        if (severityCount[severity] !== undefined) {
-          severityCount[severity] += 1;
+      scan.results.forEach((result) => {
+        if (severityCount[result.baseSeverity] !== undefined) {
+          severityCount[result.baseSeverity] += 1;
         }
       });
     });
 
+    // Return the response with the necessary data
     res.status(200).json({
       scansToday: scansToday.length,
       scansLeftToday,
-      severityCount,  // Used for the chart
+      severityCount,
       scansHistory: scans,
     });
-  } catch (error) {
-    res.status(500).json({ message: "Error fetching scan history", error });
+  } catch (err) {
+    console.error("Dashboard error:", err);
+    res.status(500).json({ message: "Error fetching dashboard data", error: err.message });
   }
 });
+
+
 
 module.exports = router;
