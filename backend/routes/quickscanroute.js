@@ -17,11 +17,12 @@ router.post("/scan", async (req, res) => {
     const pythonScriptPath = path.join(__dirname, "../quick_py/quickscrap.py");
 
     // Spawn Python process
-    const pythonProcess = spawn("python", [pythonScriptPath]);
+    const pythonProcess = spawn(pythonexecution, [pythonScriptPath]);
 
     // Send data to Python script via stdin
     pythonProcess.stdin.write(scanData);
     pythonProcess.stdin.end();
+    console.log("Scan data sent to Python script:", scanData);
 
     let pythonOutput = "";
     let pythonError = "";
@@ -49,6 +50,7 @@ router.post("/scan", async (req, res) => {
       try {
         // Parse Python output
         const scanResults = JSON.parse(pythonOutput);
+        console.log("Scan results:", scanResults);
 
         if (!Array.isArray(scanResults) || scanResults.length === 0) {
           return res.status(400).json({ message: "No valid results returned from scan" });
@@ -96,36 +98,35 @@ router.post("/send-email", async (req, res) => {
     }
 
     // Prepare the email data
-    const emailData = {
+    const docx_to_send = {
       userEmail: user.email,
       scanDetails: scan,
     };
 
-    // Convert email data to JSON string for Python script
-    const emailDataString = JSON.stringify(emailData);
-    const pythonScriptPath = path.join(__dirname, "../sendemail/send_email.py");
+    // Log the data to see what you are sending to the Python script
+    console.log("Data to be sent to Python script (JSON):", JSON.stringify(docx_to_send, null, 2));
+
+    const docx_to_send_string = JSON.stringify(docx_to_send);
+    const pythonexecution = path.join(__dirname, "../quick_py/venv/Scripts/python.exe");
+    const pythonScriptPath = path.join(__dirname, "../quick_py/send_email.py");
 
     // Spawn Python process
-    const pythonProcess = spawn("python", [pythonScriptPath]);
+    const pythonProcess = spawn(pythonexecution, [pythonScriptPath]);
 
-    // Send data to Python script via stdin
-    pythonProcess.stdin.write(emailDataString);
+    pythonProcess.stdin.write(docx_to_send_string);
     pythonProcess.stdin.end();
 
     let pythonOutput = "";
     let pythonError = "";
 
-    // Capture Python output
     pythonProcess.stdout.on("data", (data) => {
       pythonOutput += data.toString();
     });
 
-    // Capture Python errors
     pythonProcess.stderr.on("data", (data) => {
       pythonError += data.toString();
     });
 
-    // Handle Python script exit
     pythonProcess.on("close", async (code) => {
       if (code !== 0 || pythonError) {
         console.error("Python script error:", pythonError);
@@ -135,7 +136,6 @@ router.post("/send-email", async (req, res) => {
         });
       }
 
-      // Respond with success message
       res.status(200).json({
         message: "Email sent successfully",
         result: pythonOutput.trim(),
@@ -146,6 +146,7 @@ router.post("/send-email", async (req, res) => {
     res.status(500).json({ message: "Error sending email", error: err.message });
   }
 });
+
 
 
 

@@ -58,6 +58,7 @@
 import sys
 import json
 from monitor_nvd import QuickScan
+
 import asyncio
 
 # def perform_scan(product_name, product_version, cve_id):

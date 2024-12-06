@@ -7,7 +7,7 @@ const quickScanSchema = new mongoose.Schema({
   scanId: { type: String, default: function() { return `SCAN-${this._id}`; }, unique: true }, // Unique scan ID
   results: [
     {
-      cve_id: { type: String, default: null }, // Maps to "cve_id"
+      cve_id: { type: String, unique: true, sparse: true }, // Maps to "cve_id"
       vulnerabilityDescription: { type: String, default: "N/A" }, // Maps to "vulnerabilityDescription"
       published_date: { type: Date, default: null }, // Maps to "published date"
       last_modified: { type: Date, default: null }, // Maps to "last modified"
