@@ -1,5 +1,5 @@
 const express = require("express");
-const { spawn, exec } = require("child_process");
+const { spawn } = require("child_process");
 const mongoose = require('mongoose');
 const path = require("path");
 const router = express.Router();
@@ -13,6 +13,7 @@ router.post("/scan", async (req, res) => {
   try {
     // Prepare data to send to Python script
     const scanData = JSON.stringify({ productName, productVersion, cveId });
+    const pythonexecution = path.join(__dirname, "../quick_py/venv/Scripts/python.exe");
     const pythonScriptPath = path.join(__dirname, "../quick_py/quickscrap.py");
 
     // Spawn Python process

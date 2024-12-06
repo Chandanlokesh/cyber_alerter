@@ -26,7 +26,7 @@ app.get('/', (req, res) => {
 
 // Models
 const User = require('./models/users_db');
-const MonitorScan = require('./models/monitorscan_db');
+
 
 
 // MongoDB connection
