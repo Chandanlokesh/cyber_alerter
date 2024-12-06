@@ -67,14 +67,14 @@ class EmailSender:
         """Get the description and format it"""
         try:
             scan_details_obj = self.obj_data.get("scanDetails")
-            output_data = {
-                "CVE ID": scan_details_obj.get('cve_id'),
-                "Severity": scan_details_obj.get('baseSeverity'),
-                "Description": scan_details_obj.get('vulnerabilityDescription'),
-                "Mitigation": scan_details_obj.get('Mitigation'),
-                "Published Date": scan_details_obj.get('published date'),
-                "URL": scan_details_obj.get('url'),
-            }
+            output_data = f"""
+                CVE ID: {scan_details_obj.get('cve_id')},
+                Severity:{ scan_details_obj.get('baseSeverity')},
+                Description: {scan_details_obj.get('vulnerabilityDescription')},
+                Mitigation: {scan_details_obj.get('Mitigation')},
+                Published Date: {scan_details_obj.get('published date')},
+                URL: {scan_details_obj.get('url')},
+            """
 
             return output_data
 

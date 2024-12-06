@@ -11,10 +11,12 @@ app.use(express.urlencoded({ extended: true }));
 // Routes
 const userRoutes = require('./routes/users');
 const quickScanRoutes = require('./routes/quickscanroute');
+const monitorScanRoutes = require('./routes/monitorschanroute');
 
 
 app.use('/users', userRoutes);
 app.use('/quickscan', quickScanRoutes);
+app.use('/monitorscan', monitorScanRoutes);
 
 
 
