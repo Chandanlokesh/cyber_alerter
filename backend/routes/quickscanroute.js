@@ -6,38 +6,110 @@ const router = express.Router();
 const Scan = require("../models/quickscan_db"); // Scan database model
 const User = require("../models/users_db");   // User database model
 
-// Quick Scan Route
 router.post("/scan", async (req, res) => {
-  const { userId, productName, productVersion, cveId } = req.body;
+  const { userId, productName, productVersion } = req.body;
 
   try {
-    // Prepare data to send to Python script
-    const scanData = JSON.stringify({ productName, productVersion, cveId });
-    const pythonexecution = path.join(__dirname, "../quick_py/venv/Scripts/python.exe");
+    // Check if the product already exists in the database
+    const existingScan = await Scan.findOne({
+      userId,
+      productName,
+      productVersion,
+    });
+
+    if (existingScan) {
+      console.log("Product already exists in the database.");
+
+      // Trigger Python script to get updated data
+      const scanData = JSON.stringify({ productName, productVersion });
+      const pythonExecution = path.join(__dirname, "../quick_py/venv/Scripts/python.exe");
+      const pythonScriptPath = path.join(__dirname, "../quick_py/quickscrap.py");
+
+      const pythonProcess = spawn(pythonExecution, [pythonScriptPath]);
+
+      pythonProcess.stdin.write(scanData);
+      pythonProcess.stdin.end();
+
+      let pythonOutput = "";
+      let pythonError = "";
+
+      pythonProcess.stdout.on("data", (data) => {
+        pythonOutput += data.toString();
+      });
+
+      pythonProcess.stderr.on("data", (data) => {
+        pythonError += data.toString();
+      });
+
+      pythonProcess.on("close", async (code) => {
+        if (code !== 0 || pythonError) {
+          console.error("Python script error:", pythonError);
+          return res.status(500).json({
+            message: "Python script execution failed",
+            error: pythonError.trim() || `Exited with code ${code}`,
+          });
+        }
+
+        try {
+          const newScanResults = JSON.parse(pythonOutput);
+          console.log("New scan results:", newScanResults);
+
+          // Filter out duplicate results
+          const uniqueResults = newScanResults.filter((newResult) => {
+            return !existingScan.results.some(
+              (existingResult) => existingResult.cve_id === newResult.cve_id
+            );
+          });
+
+          if (uniqueResults.length === 0) {
+            console.log("No new data found, returning existing results.");
+            return res.status(200).json({
+              message: "No new vulnerabilities found.",
+              scanResults: existingScan.results,
+              scanId: existingScan._id,
+            });
+          }
+
+          // Add unique results to the existing scan
+          existingScan.results.push(...uniqueResults);
+          await existingScan.save();
+
+          return res.status(200).json({
+            message: "New vulnerabilities added to the database.",
+            scanResults: existingScan.results,
+            scanId: existingScan._id,
+          });
+        } catch (err) {
+          console.error("Error processing new scan results:", err);
+          res.status(500).json({ message: "Error processing new scan results", error: err.message });
+        }
+      });
+
+      return;
+    }
+
+    // If the product doesn't exist, trigger a new scan
+    console.log("Product not found, initiating a new scan.");
+    const scanData = JSON.stringify({ productName, productVersion });
+    const pythonExecution = path.join(__dirname, "../quick_py/venv/Scripts/python.exe");
     const pythonScriptPath = path.join(__dirname, "../quick_py/quickscrap.py");
 
-    // Spawn Python process
-    const pythonProcess = spawn(pythonexecution, [pythonScriptPath]);
+    const pythonProcess = spawn(pythonExecution, [pythonScriptPath]);
 
-    // Send data to Python script via stdin
     pythonProcess.stdin.write(scanData);
     pythonProcess.stdin.end();
-    console.log("Scan data sent to Python script:", scanData);
 
     let pythonOutput = "";
     let pythonError = "";
 
-    // Capture Python output
     pythonProcess.stdout.on("data", (data) => {
       pythonOutput += data.toString();
     });
 
-    // Capture Python errors
     pythonProcess.stderr.on("data", (data) => {
       pythonError += data.toString();
     });
 
-    // Handle Python script exit
     pythonProcess.on("close", async (code) => {
       if (code !== 0 || pythonError) {
         console.error("Python script error:", pythonError);
@@ -48,39 +120,44 @@ router.post("/scan", async (req, res) => {
       }
 
       try {
-        // Parse Python output
         const scanResults = JSON.parse(pythonOutput);
         console.log("Scan results:", scanResults);
 
         if (!Array.isArray(scanResults) || scanResults.length === 0) {
-          console.log("No data found in the scan results");
-          return res.status(404).json({ message: "No data found in the database for the provided input" });
+          return res.status(404).json({ message: "No vulnerabilities found." });
         }
-        
 
-        // Save scan results to the database
-        const scan = new Scan({ userId, productName, productVersion, cveId, results: scanResults });
-        await scan.save();
+        const newScan = new Scan({
+          userId,
+          productName,
+          productVersion,
+          results: scanResults,
+        });
 
-        // Update user scan count
+        await newScan.save();
+
         const user = await User.findById(userId);
         if (user) {
           user.scansPerformedToday.quickScan += 1;
           await user.save();
         }
 
-        // Respond with scan results
-        res.status(200).json({ message: "Scan completed successfully", scanResults, scanId: scan._id });
+        return res.status(200).json({
+          message: "Scan completed successfully.",
+          scanResults,
+          scanId: newScan._id,
+        });
       } catch (err) {
-        console.error("Error processing scan results:", err);
-        res.status(500).json({ message: "Error processing scan results", error: err.message });
+        console.error("Error saving new scan results:", err);
+        res.status(500).json({ message: "Error saving new scan results", error: err.message });
       }
     });
   } catch (err) {
-    console.error("Scan initiation error:", err);
+    console.error("Error initiating scan:", err);
     res.status(500).json({ message: "Error initiating scan", error: err.message });
   }
 });
+
 
 // Send email route
 router.post("/send-email", async (req, res) => {
