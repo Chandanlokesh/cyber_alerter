@@ -53,8 +53,10 @@ router.post("/scan", async (req, res) => {
         console.log("Scan results:", scanResults);
 
         if (!Array.isArray(scanResults) || scanResults.length === 0) {
-          return res.status(400).json({ message: "No valid results returned from scan" });
+          console.log("No data found in the scan results");
+          return res.status(404).json({ message: "No data found in the database for the provided input" });
         }
+        
 
         // Save scan results to the database
         const scan = new Scan({ userId, productName, productVersion, cveId, results: scanResults });
