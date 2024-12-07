@@ -1,0 +1,286 @@
+{
+    "userEmail": "chandanlokesh17@gmail.com",
+    "scanDetails": {
+      "_id": "6753452f723417c1ddaf7823",
+      "userId": "6752b04e67108c31580d4b53",
+      "productName": "Juniper Networks Firewall",
+      "productVersion": "",
+      "results": [
+        {
+          "cve_id": "CVE-2004-1446",
+          "vulnerabilityDescription": "Unknown vulnerability in ScreenOS in Juniper Networks NetScreen firewall 3.x through 5.x allows remote attackers to cause a denial of service (device reboot or hang) via a crafted SSH v1 packet.",
+          "published_date": "2004-12-30T23:30:00.000Z",
+          "last_modified": "2024-11-20T18:20:54.083Z",
+          "vulnStatus": "Modified",
+          "baseScore": 5,
+          "baseSeverity": "Medium",
+          "oemUrl": "http://secunia.com/advisories/12208/",
+          "_id": "6753452f723417c1ddaf7824"
+        },
+        {
+          "cve_id": "CVE-2014-3813",
+          "vulnerabilityDescription": "Unspecified vulnerability in the Juniper Networks NetScreen Firewall products with ScreenOS before 6.3r17, when configured to use the internal DNS lookup client, allows remote attackers to cause a denial of service (crash and reboot) via vectors related to a DNS lookup.",
+          "published_date": "2014-06-13T09:25:16.103Z",
+          "last_modified": "2024-11-20T20:38:54.200Z",
+          "vulnStatus": "Modified",
+          "baseScore": 7.8,
+          "baseSeverity": "High",
+          "oemUrl": "http://kb.juniper.net/InfoCenter/index?page=content&id=JSA10631",
+          "_id": "6753452f723417c1ddaf7825"
+        },
+        {
+          "cve_id": "CVE-2014-3814",
+          "vulnerabilityDescription": "The Juniper Networks NetScreen Firewall devices with ScreenOS before 6.3r17, when configured to use the internal DNS lookup client, allows remote attackers to cause a denial of service (crash and reboot) via a sequence of malformed packets to the device IP.",
+          "published_date": "2014-06-13T09:25:16.167Z",
+          "last_modified": "2024-11-20T20:38:54.343Z",
+          "vulnStatus": "Modified",
+          "baseScore": 7.8,
+          "baseSeverity": "High",
+          "oemUrl": "http://kb.juniper.net/InfoCenter/index?page=content&id=JSA10632",
+          "_id": "6753452f723417c1ddaf7826"
+        },
+        {
+          "cve_id": "CVE-2017-2331",
+          "vulnerabilityDescription": "A firewall bypass vulnerability in Juniper Networks NorthStar Controller Application prior to version 2.1.0 Service Pack 1 may allow a network-based malicious attacker to bypass firewall policies, leading to authentication bypass methods, information disclosure, modification of system files, and denials of service.",
+          "published_date": "2017-04-24T10:29:00.737Z",
+          "last_modified": "2024-11-20T21:53:18.000Z",
+          "vulnStatus": "Modified",
+          "baseScore": 7.3,
+          "baseSeverity": "High",
+          "oemUrl": "http://www.securityfocus.com/bid/97619",
+          "_id": "6753452f723417c1ddaf7827"
+        },
+        {
+          "cve_id": "CVE-2017-2310",
+          "vulnerabilityDescription": "A firewall bypass vulnerability in the host based firewall of Juniper Networks Junos Space versions prior to 16.1R1 may permit certain crafted packets, representing a network integrity risk.",
+          "published_date": "2017-05-30T08:59:01.113Z",
+          "last_modified": "2024-11-20T21:53:15.517Z",
+          "vulnStatus": "Modified",
+          "baseScore": 5.3,
+          "baseSeverity": "Medium",
+          "oemUrl": "http://www.securityfocus.com/bid/98751",
+          "_id": "6753452f723417c1ddaf7828"
+        },
+        {
+          "cve_id": "CVE-2017-2335",
+          "vulnerabilityDescription": "A persistent cross site scripting vulnerability in NetScreen WebUI of Juniper Networks Juniper NetScreen Firewall+VPN running ScreenOS allows a user with the 'security' role to inject HTML/JavaScript content into the management session of other users including the administrator. This enables the lower-privileged user to effectively execute commands with the permissions of an administrator. This issue affects Juniper Networks ScreenOS 6.3.0 releases prior to 6.3.0r24 on SSG Series. No other Juniper Networks products or platforms are affected by this issue.",
+          "published_date": "2017-07-17T07:48:23.953Z",
+          "last_modified": "2024-11-20T21:53:18.550Z",
+          "vulnStatus": "Modified",
+          "baseScore": 8.4,
+          "baseSeverity": "High",
+          "oemUrl": "http://www.securityfocus.com/bid/99590",
+          "_id": "6753452f723417c1ddaf7829"
+        },
+        {
+          "cve_id": "CVE-2017-2336",
+          "vulnerabilityDescription": "A reflected cross site scripting vulnerability in NetScreen WebUI of Juniper Networks Juniper NetScreen Firewall+VPN running ScreenOS allows a network based attacker to inject HTML/JavaScript content into the management session of other users including the administrator. This enables the attacker to effectively execute commands with the permissions of an administrator. This issue affects Juniper Networks ScreenOS 6.3.0 releases prior to 6.3.0r24 on SSG Series. No other Juniper Networks products or platforms are affected by this issue.",
+          "published_date": "2017-07-17T07:48:23.987Z",
+          "last_modified": "2024-11-20T21:53:18.687Z",
+          "vulnStatus": "Modified",
+          "baseScore": 9.6,
+          "baseSeverity": "Critical",
+          "oemUrl": "http://www.securityfocus.com/bid/99590",
+          "_id": "6753452f723417c1ddaf782a"
+        },
+        {
+          "cve_id": "CVE-2017-2337",
+          "vulnerabilityDescription": "A persistent cross site scripting vulnerability in NetScreen WebUI of Juniper Networks Juniper NetScreen Firewall+VPN running ScreenOS allows a user with the 'security' role to inject HTML/JavaScript content into the management session of other users including the administrator. This enables the lower-privileged user to effectively execute commands with the permissions of an administrator. This issue affects Juniper Networks ScreenOS 6.3.0 releases prior to 6.3.0r24 on SSG Series. No other Juniper Networks products or platforms are affected by this issue.",
+          "published_date": "2017-07-17T07:48:24.030Z",
+          "last_modified": "2024-11-20T21:53:18.820Z",
+          "vulnStatus": "Modified",
+          "baseScore": 8.4,
+          "baseSeverity": "High",
+          "oemUrl": "http://www.securityfocus.com/bid/99590",
+          "_id": "6753452f723417c1ddaf782b"
+        },
+        {
+          "cve_id": "CVE-2017-2338",
+          "vulnerabilityDescription": "A persistent cross site scripting vulnerability in NetScreen WebUI of Juniper Networks Juniper NetScreen Firewall+VPN running ScreenOS allows a user with the 'security' role to inject HTML/JavaScript content into the management session of other users including the administrator. This enables the lower-privileged user to effectively execute commands with the permissions of an administrator. This issue affects Juniper Networks ScreenOS 6.3.0 releases prior to 6.3.0r24 on SSG Series. No other Juniper Networks products or platforms are affected by this issue.",
+          "published_date": "2017-07-17T07:48:24.063Z",
+          "last_modified": "2024-11-20T21:53:18.943Z",
+          "vulnStatus": "Modified",
+          "baseScore": 8.4,
+          "baseSeverity": "High",
+          "oemUrl": "http://www.securityfocus.com/bid/99590",
+          "_id": "6753452f723417c1ddaf782c"
+        },
+        {
+          "cve_id": "CVE-2017-2339",
+          "vulnerabilityDescription": "A persistent cross site scripting vulnerability in NetScreen WebUI of Juniper Networks Juniper NetScreen Firewall+VPN running ScreenOS allows a user with the 'security' role to inject HTML/JavaScript content into the management session of other users including the administrator. This enables the lower-privileged user to effectively execute commands with the permissions of an administrator. This issue affects Juniper Networks ScreenOS 6.3.0 releases prior to 6.3.0r24 on SSG Series. No other Juniper Networks products or platforms are affected by this issue.",
+          "published_date": "2017-07-17T07:48:24.127Z",
+          "last_modified": "2024-11-20T21:53:19.087Z",
+          "vulnStatus": "Modified",
+          "baseScore": 8.4,
+          "baseSeverity": "High",
+          "oemUrl": "http://www.securityfocus.com/bid/99590",
+          "_id": "6753452f723417c1ddaf782d"
+        },
+        {
+          "cve_id": "CVE-2017-2343",
+          "vulnerabilityDescription": "The Integrated User Firewall (UserFW) feature was introduced in Junos OS version 12.1X47-D10 on the Juniper SRX Series devices to provide simple integration of user profiles on top of the existing firewall polices. As part of an internal security review of the UserFW services authentication API, hardcoded credentials were identified and removed which can impact both the SRX Series device, and potentially LDAP and Active Directory integrated points. An attacker may be able to completely compromise SRX Series devices, as well as Active Directory servers and services. When Active Directory is compromised, it may allow access to user credentials, workstations, servers performing other functions such as email, database, etc. Inter-Forest Active Directory deployments may also be at risk as the attacker may gain full administrative control over one or more Active Directories depending on the credentials supplied by the administrator of the AD domains and SRX devices performing integrated authentication of users, groups and devices. To identify if your device is potentially vulnerable to exploitation, check to see if the service is operating; from CLI review the following output: root@SRX-Firewall# run show services user-identification active-directory-access domain-controller status extensive A result of \"Status: Connected\" will indicate that the service is active on the device. To evaluate if user authentication is occurring through the device: root@SRX-Firewall# run show services user-identification active-directory-access active-directory-authentication-table all Next review the results to see if valid users and groups are returned. e.g. Domain: juniperlab.com Total entries: 3 Source IP Username groups state 172.16.26.1 administrator Valid 192.168.26.2 engg01 engineers Valid 192.168.26.3 guest01 guests Valid Domain: NULL Total entries: 8 Source IP Username groups state 192.168.26.4 Invalid 192.168.26.5 Invalid This will also indicate that Valid users and groups are authenticating through the device. Affected releases are Juniper Networks Junos OS 12.3X48 from 12.3X48-D30 and prior to 12.3X48-D35 on SRX series; 15.1X49 from 15.1X49-D40 and prior to 15.1X49-D50 on SRX series. Devices on any version of Junos OS 12.1X46, or 12.1X47 are unaffected by this issue.",
+          "published_date": "2017-07-17T07:48:24.297Z",
+          "last_modified": "2024-11-20T21:53:19.670Z",
+          "vulnStatus": "Modified",
+          "baseScore": 10,
+          "baseSeverity": "Critical",
+          "oemUrl": "http://www.securitytracker.com/id/1038904",
+          "_id": "6753452f723417c1ddaf782e"
+        },
+        {
+          "cve_id": "CVE-2018-0009",
+          "vulnerabilityDescription": "On Juniper Networks SRX series devices, firewall rules configured to match custom application UUIDs starting with zeros can match all TCP traffic. Due to this issue, traffic that should have been blocked by other rules is permitted to flow through the device resulting in a firewall bypass condition. Affected releases are Juniper Networks Junos OS: 12.1X46 versions prior to 12.1X46-D71 on SRX series; 12.3X48 versions prior to 12.3X48-D55 on SRX series; 15.1X49 versions prior to 15.1X49-D100 on SRX series.",
+          "published_date": "2018-01-10T16:59:01.260Z",
+          "last_modified": "2024-11-20T22:07:20.957Z",
+          "vulnStatus": "Modified",
+          "baseScore": 5.4,
+          "baseSeverity": "Medium",
+          "oemUrl": "http://www.securityfocus.com/bid/102491",
+          "_id": "6753452f723417c1ddaf782f"
+        },
+        {
+          "cve_id": "CVE-2018-0018",
+          "vulnerabilityDescription": "On SRX Series devices during compilation of IDP policies, an attacker sending specially crafted packets may be able to bypass firewall rules, leading to information disclosure which an attacker may use to gain control of the target device or other internal devices, systems or services protected by the SRX Series device. This issue only applies to devices where IDP policies are applied to one or more rules. Customers not using IDP policies are not affected. Depending on if the IDP updates are automatic or not, as well as the interval between available updates, an attacker may have more or less success in performing reconnaissance or bypass attacks on the victim SRX Series device or protected devices. ScreenOS with IDP is not vulnerable to this issue. Affected releases are Juniper Networks Junos OS: 12.1X46 versions prior to 12.1X46-D60 on SRX; 12.3X48 versions prior to 12.3X48-D35 on SRX; 15.1X49 versions prior to 15.1X49-D60 on SRX.",
+          "published_date": "2018-04-11T13:59:00.387Z",
+          "last_modified": "2024-11-20T22:07:22.120Z",
+          "vulnStatus": "Modified",
+          "baseScore": 7.5,
+          "baseSeverity": "High",
+          "oemUrl": "http://www.securityfocus.com/bid/103748",
+          "_id": "6753452f723417c1ddaf7830"
+        },
+        {
+          "cve_id": "CVE-2018-0019",
+          "vulnerabilityDescription": "A vulnerability in Junos OS SNMP MIB-II subagent daemon (mib2d) may allow a remote network based attacker to cause the mib2d process to crash resulting in a denial of service condition (DoS) for the SNMP subsystem. While a mib2d process crash can disrupt the network monitoring via SNMP, it does not impact routing, switching or firewall functionalities. SNMP is disabled by default on devices running Junos OS. Affected releases are Juniper Networks Junos OS: 12.1X46 versions prior to 12.1X46-D76; 12.3 versions prior to 12.3R12-S7, 12.3R13; 12.3X48 versions prior to 12.3X48-D65; 14.1 versions prior to 14.1R9; 14.1X53 versions prior to 14.1X53-D130; 15.1 versions prior to 15.1F2-S20, 15.1F6-S10, 15.1R7; 15.1X49 versions prior to 15.1X49-D130; 15.1X53 versions prior to 15.1X53-D233, 15.1X53-D471, 15.1X53-D472, 15.1X53-D58, 15.1X53-D66; 16.1 versions prior to 16.1R5-S3, 16.1R7; 16.1X65 versions prior to 16.1X65-D47; 16.1X70 versions prior to 16.1X70-D10; 16.2 versions prior to 16.2R1-S6, 16.2R2-S5, 16.2R3; 17.1 versions prior to 17.1R2-S6, 17.1R3;",
+          "published_date": "2018-04-11T13:59:00.447Z",
+          "last_modified": "2024-11-20T22:07:22.263Z",
+          "vulnStatus": "Modified",
+          "baseScore": 5.3,
+          "baseSeverity": "Medium",
+          "oemUrl": "http://www.securitytracker.com/id/1040787",
+          "_id": "6753452f723417c1ddaf7831"
+        },
+        {
+          "cve_id": "CVE-2018-0026",
+          "vulnerabilityDescription": "After Junos OS device reboot or upgrade, the stateless firewall filter configuration may not take effect. This issue can be verified by running the command: user@re0> show interfaces <interface_name> extensive | match filters\" CAM destination filters: 0, CAM source filters: 0 Note: when the issue occurs, it does not show the applied firewall filter. The correct output should show the applied firewall filter, for example: user@re0> show interfaces <interface_name> extensive | match filters\" CAM destination filters: 0, CAM source filters: 0 Input Filters: FIREWAL_FILTER_NAME-<interface_name> This issue affects firewall filters for every address family. Affected releases are Juniper Networks Junos OS: 15.1R4, 15.1R5, 15.1R6 and SRs based on these MRs. 15.1X8 versions prior to 15.1X8.3.",
+          "published_date": "2018-07-11T12:59:00.293Z",
+          "last_modified": "2024-11-20T22:07:23.333Z",
+          "vulnStatus": "Modified",
+          "baseScore": 4.7,
+          "baseSeverity": "Medium",
+          "oemUrl": "http://www.securityfocus.com/bid/104720",
+          "_id": "6753452f723417c1ddaf7832"
+        },
+        {
+          "cve_id": "CVE-2018-0031",
+          "vulnerabilityDescription": "Receipt of specially crafted UDP/IP packets over MPLS may be able to bypass a stateless firewall filter. The crafted UDP packets must be encapsulated and meet a very specific packet format to be classified in a way that bypasses IP firewall filter rules. The packets themselves do not cause a service interruption (e.g. RPD crash), but receipt of a high rate of UDP packets may be able to contribute to a denial of service attack. This issue only affects processing of transit UDP/IP packets over MPLS, received on an interface with MPLS enabled. TCP packet processing and non-MPLS encapsulated UDP packet processing are unaffected by this issue. Affected releases are Juniper Networks Junos OS: 12.1X46 versions prior to 12.1X46-D76; 12.3 versions prior to 12.3R12-S10; 12.3X48 versions prior to 12.3X48-D66, 12.3X48-D70; 14.1X53 versions prior to 14.1X53-D47; 15.1 versions prior to 15.1F6-S10, 15.1R4-S9, 15.1R6-S6, 15.1R7; 15.1X49 versions prior to 15.1X49-D131, 15.1X49-D140; 15.1X53 versions prior to 15.1X53-D59 on EX2300/EX3400; 15.1X53 versions prior to 15.1X53-D67 on QFX10K; 15.1X53 versions prior to 15.1X53-D233 on QFX5200/QFX5110; 15.1X53 versions prior to 15.1X53-D471, 15.1X53-D490 on NFX; 16.1 versions prior to 16.1R3-S8, 16.1R4-S9, 16.1R5-S4, 16.1R6-S3, 16.1R7; 16.2 versions prior to 16.2R1-S6, 16.2R2-S5, 16.2R3; 17.1 versions prior to 17.1R1-S7, 17.1R2-S7, 17.1R3; 17.2 versions prior to 17.2R1-S6, 17.2R2-S4, 17.2R3; 17.2X75 versions prior to 17.2X75-D100; 17.3 versions prior to 17.3R1-S4, 17.3R2-S2, 17.3R3; 17.4 versions prior to 17.4R1-S3, 17.4R2; 18.1 versions prior to 18.1R2; 18.2X75 versions prior to 18.2X75-D5.",
+          "published_date": "2018-07-11T12:59:00.510Z",
+          "last_modified": "2024-11-20T22:07:23.837Z",
+          "vulnStatus": "Modified",
+          "baseScore": 5.3,
+          "baseSeverity": "Medium",
+          "oemUrl": "http://www.securitytracker.com/id/1041326",
+          "_id": "6753452f723417c1ddaf7833"
+        },
+        {
+          "cve_id": "CVE-2018-0051",
+          "vulnerabilityDescription": "A Denial of Service vulnerability in the SIP application layer gateway (ALG) component of Junos OS based platforms allows an attacker to crash MS-PIC, MS-MIC, MS-MPC, MS-DPC or SRX flow daemon (flowd) process. This issue affects Junos OS devices with NAT or stateful firewall configuration in combination with the SIP ALG enabled. SIP ALG is enabled by default on SRX Series devices except for SRX-HE devices. SRX-HE devices have SIP ALG disabled by default. The status of ALGs in SRX device can be obtained by executing the command: show security alg status Affected releases are Juniper Networks Junos OS: 12.1X46 versions prior to 12.1X46-D77; 12.3X48 versions prior to 12.3X48-D70; 15.1X49 versions prior to 15.1X49-D140; 15.1 versions prior to 15.1R4-S9, 15.1R7-S1; 15.1F6; 16.1 versions prior to 16.1R4-S9, 16.1R6-S1, 16.1R7; 16.2 versions prior to 16.2R2-S7, 16.2R3; 17.1 versions prior to 17.1R2-S7, 17.1R3; 17.2 versions prior to 17.2R1-S6, 17.2R2-S4, 17.2R3; 17.3 versions prior to 17.3R1-S5, 17.3R2-S2, 17.3R3; 17.4 versions prior to 17.4R2. No other Juniper Networks products or platforms are affected by this issue.",
+          "published_date": "2018-10-10T12:59:02.313Z",
+          "last_modified": "2024-11-20T22:07:26.313Z",
+          "vulnStatus": "Modified",
+          "baseScore": 7.5,
+          "baseSeverity": "High",
+          "oemUrl": "http://www.securitytracker.com/id/1041852",
+          "_id": "6753452f723417c1ddaf7834"
+        },
+        {
+          "cve_id": "CVE-2019-0005",
+          "vulnerabilityDescription": "On EX2300, EX3400, EX4600, QFX3K and QFX5K series, firewall filter configuration cannot perform packet matching on any IPv6 extension headers. This issue may allow IPv6 packets that should have been blocked to be forwarded. IPv4 packet filtering is unaffected by this vulnerability. Affected releases are Juniper Networks Junos OS on EX and QFX series;: 14.1X53 versions prior to 14.1X53-D47; 15.1 versions prior to 15.1R7; 15.1X53 versions prior to 15.1X53-D234 on QFX5200/QFX5110 series; 15.1X53 versions prior to 15.1X53-D591 on EX2300/EX3400 series; 16.1 versions prior to 16.1R7; 17.1 versions prior to 17.1R2-S10, 17.1R3; 17.2 versions prior to 17.2R3; 17.3 versions prior to 17.3R3; 17.4 versions prior to 17.4R2; 18.1 versions prior to 18.1R2.",
+          "published_date": "2019-01-15T15:59:00.963Z",
+          "last_modified": "2024-11-20T22:46:01.723Z",
+          "vulnStatus": "Modified",
+          "baseScore": 5.3,
+          "baseSeverity": "Medium",
+          "oemUrl": "http://www.securityfocus.com/bid/106665",
+          "_id": "6753452f723417c1ddaf7835"
+        },
+        {
+          "cve_id": "CVE-2019-0033",
+          "vulnerabilityDescription": "A firewall bypass vulnerability in the proxy ARP service of Juniper Networks Junos OS allows an attacker to cause a high CPU condition leading to a Denial of Service (DoS). This issue affects only IPv4. Affected releases are Juniper Networks Junos OS: 12.1X46 versions above and including 12.1X46-D25 prior to 12.1X46-D71, 12.1X46-D73 on SRX Series; 12.3X48 versions prior to 12.3X48-D50 on SRX Series; 15.1X49 versions prior to 15.1X49-D75 on SRX Series.",
+          "published_date": "2019-04-10T14:59:00.583Z",
+          "last_modified": "2024-11-20T22:46:05.597Z",
+          "vulnStatus": "Modified",
+          "baseScore": 7.5,
+          "baseSeverity": "High",
+          "oemUrl": "http://www.securityfocus.com/bid/107882",
+          "_id": "6753452f723417c1ddaf7836"
+        },
+        {
+          "cve_id": "CVE-2019-0036",
+          "vulnerabilityDescription": "When configuring a stateless firewall filter in Junos OS, terms named using the format \"internal-n\" (e.g. \"internal-1\", \"internal-2\", etc.) are silently ignored. No warning is issued during configuration, and the config is committed without error, but the filter criteria will match all packets leading to unexpected results. Affected releases are Juniper Networks Junos OS: All versions prior to and including 12.3; 14.1X53 versions prior to 14.1X53-D130, 14.1X53-D49; 15.1 versions prior to 15.1F6-S12, 15.1R7-S4; 15.1X49 versions prior to 15.1X49-D161, 15.1X49-D170; 15.1X53 versions prior to 15.1X53-D236, 15.1X53-D496, 15.1X53-D69; 16.1 versions prior to 16.1R7-S4, 16.1R7-S5; 16.2 versions prior to 16.2R2-S9; 17.1 versions prior to 17.1R3; 17.2 versions prior to 17.2R1-S8, 17.2R3-S1; 17.3 versions prior to 17.3R3-S4; 17.4 versions prior to 17.4R1-S7, 17.4R2-S3; 18.1 versions prior to 18.1R2-S4, 18.1R3-S4; 18.2 versions prior to 18.2R1-S5, 18.2R2-S1; 18.2X75 versions prior to 18.2X75-D40; 18.3 versions prior to 18.3R1-S3; 18.4 versions prior to 18.4R1-S1, 18.4R1-S2.",
+          "published_date": "2019-04-10T14:59:00.757Z",
+          "last_modified": "2024-11-20T22:46:05.940Z",
+          "vulnStatus": "Modified",
+          "baseScore": 9.8,
+          "baseSeverity": "Critical",
+          "oemUrl": "https://kb.juniper.net/JSA10925",
+          "_id": "6753452f723417c1ddaf7837"
+        },
+        {
+          "cve_id": "CVE-2019-0048",
+          "vulnerabilityDescription": "On EX4300 Series switches with TCAM optimization enabled, incoming multicast traffic matches an implicit loopback filter rule first, since it has high priority. This rule is meant for reserved multicast addresses 224.0.0.x, but incorrectly matches on 224.x.x.x. Due to this bug, when a firewall filter is applied on the loopback interface, other firewall filters might stop working for multicast traffic. The command 'show firewall filter' can be used to confirm whether the filter is working. This issue only affects the EX4300 switch. No other products or platforms are affected by this vulnerability. This issue affects: Juniper Networks Junos OS: 14.1X53 versions prior to 14.1X53-D51, 14.1X53-D115 on EX4300 Series; 17.1 versions prior to 17.1R3 on EX4300 Series; 17.2 versions prior to 17.2R3-S2 on EX4300 Series; 17.3 versions prior to 17.3R3-S3 on EX4300 Series; 17.4 versions prior to 17.4R2-S5, 17.4R3 on EX4300 Series; 18.1 versions prior to 18.1R3-S1 on EX4300 Series; 18.2 versions prior to 18.2R2 on EX4300 Series; 18.3 versions prior to 18.3R2 on EX4300 Series.",
+          "published_date": "2019-07-11T14:45:11.257Z",
+          "last_modified": "2024-11-20T22:46:07.733Z",
+          "vulnStatus": "Modified",
+          "baseScore": 5.8,
+          "baseSeverity": "Medium",
+          "oemUrl": "https://kb.juniper.net/JSA10942",
+          "_id": "6753452f723417c1ddaf7838"
+        },
+        {
+          "cve_id": "CVE-2020-1604",
+          "vulnerabilityDescription": "On EX4300, EX4600, QFX3500, and QFX5100 Series, a vulnerability in the IP firewall filter component may cause the firewall filter evaluation of certain packets to fail. This issue only affects firewall filter evaluation of certain packets destined to the device Routing Engine (RE). This issue does not affect the Layer 2 firewall filter evaluation nor does it affect the Layer 3 firewall filter evaluation destined to connected hosts. This issue may occur when evaluating both IPv4 or IPv6 packets. This issue affects Juniper Networks Junos OS: 14.1X53 versions prior to 14.1X53-D12 on QFX5100 Series and EX4600 Series; 14.1X53 versions prior to 14.1X53-D52 on QFX3500 Series; 14.1X53 versions prior to 14.1X53-D48 on EX4300 Series; 15.1 versions prior to 15.1R7-S3 on EX4300 Series; 16.1 versions prior to 16.1R7 on EX4300 Series; 17.1 versions prior to 17.1R3 on EX4300 Series; 17.2 versions prior to 17.2R3 on EX4300 Series; 17.3 versions prior to 17.3R2-S5, 17.3R3 on EX4300 Series; 17.4 versions prior to 17.4R2 on EX4300 Series; 18.1 versions prior to 18.1R3 on EX4300 Series; 18.2 versions prior to 18.2R2 on EX4300 Series.",
+          "published_date": "2020-01-15T03:45:12.203Z",
+          "last_modified": "2024-11-20T23:40:56.710Z",
+          "vulnStatus": "Modified",
+          "baseScore": 6.5,
+          "baseSeverity": "Medium",
+          "oemUrl": "https://kb.juniper.net/JSA10983",
+          "_id": "6753452f723417c1ddaf7839"
+        },
+        {
+          "cve_id": "CVE-2020-1617",
+          "vulnerabilityDescription": "This issue occurs on Juniper Networks Junos OS devices which do not support Advanced Forwarding Interface (AFI) / Advanced Forwarding Toolkit (AFT). Devices using AFI and AFT are not exploitable to this issue. An improper initialization of memory in the packet forwarding architecture in Juniper Networks Junos OS non-AFI/AFT platforms which may lead to a Denial of Service (DoS) vulnerability being exploited when a genuine packet is received and inspected by non-AFT/AFI sFlow and when the device is also configured with firewall policers. This first genuine packet received and inspected by sampled flow (sFlow) through a specific firewall policer will cause the device to reboot. After the reboot has completed, if the device receives and sFlow inspects another genuine packet seen through a specific firewall policer, the device will generate a core file and reboot. Continued inspection of these genuine packets will create an extended Denial of Service (DoS) condition. Depending on the method for service restoration, e.g. hard boot or soft reboot, a core file may or may not be generated the next time the packet is received and inspected by sFlow. This issue affects: Juniper Networks Junos OS 17.4 versions prior to 17.4R2-S9, 17.4R3 on PTX1000 and PTX10000 Series, QFX10000 Series; 18.1 versions prior to 18.1R3-S9 on PTX1000 and PTX10000 Series, QFX10000 Series; 18.2X75 versions prior to 18.2X75-D12, 18.2X75-D30 on PTX1000 and PTX10000 Series, QFX10000 Series; 18.2 versions prior to 18.2R3 on PTX1000 and PTX10000 Series, QFX10000 Series; 18.3 versions prior to 18.3R3 on PTX1000 and PTX10000 Series, QFX10000 Series. This issue is not applicable to Junos OS versions before 17.4R1. This issue is not applicable to Junos OS Evolved or Junos OS with Advanced Forwarding Toolkit (AFT) forwarding implementations which use a different implementation of sFlow. The following example information is unrelated to this issue and is provided solely to assist you with determining if you have AFT or not. Example: A Junos OS device which supports the use of EVPN signaled VPWS with Flexible Cross Connect uses the AFT implementation. Since this configuration requires support and use of the AFT implementation to support this configuration, the device is not vulnerable to this issue as the sFlow implementation is different using the AFT architecture. For further details about AFT visit the AFI / AFT are in the links below. If you are uncertain if you use the AFI/AFT implementation or not, there are configuration examples in the links below which you may use to determine if you are vulnerable to this issue or not. If the commands work, you are. If not, you are not. You may also use the Feature Explorer to determine if AFI/AFT is supported or not. If you are still uncertain, please contact your support resources.",
+          "published_date": "2020-04-08T14:45:13.323Z",
+          "last_modified": "2024-11-20T23:41:00.413Z",
+          "vulnStatus": "Modified",
+          "baseScore": 7.5,
+          "baseSeverity": "High",
+          "oemUrl": "https://github.com/Juniper/AFI",
+          "_id": "6753452f723417c1ddaf783a"
+        },
+        {
+          "cve_id": "CVE-2020-1631",
+          "vulnerabilityDescription": "A vulnerability in the HTTP/HTTPS service used by J-Web, Web Authentication, Dynamic-VPN (DVPN), Firewall Authentication Pass-Through with Web-Redirect, and Zero Touch Provisioning (ZTP) allows an unauthenticated attacker to perform local file inclusion (LFI) or path traversal. Using this vulnerability, an attacker may be able to inject commands into the httpd.log, read files with 'world' readable permission file or obtain J-Web session tokens. In the case of command injection, as the HTTP service runs as user 'nobody', the impact of this command injection is limited. (CVSS score 5.3, vector CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:N/A:N) In the case of reading files with 'world' readable permission, in Junos OS 19.3R1 and above, the unauthenticated attacker would be able to read the configuration file. (CVSS score 5.9, vector CVSS:3.1/ AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:N/A:N) If J-Web is enabled, the attacker could gain the same level of access of anyone actively logged into J-Web. If an administrator is logged in, the attacker could gain administrator access to J-Web. (CVSS score 8.8, vector CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H) This issue only affects Juniper Networks Junos OS devices with HTTP/HTTPS services enabled. Junos OS devices with HTTP/HTTPS services disabled are not affected. If HTTP/HTTPS services are enabled, the following command will show the httpd processes: user@device> show system processes | match http 5260 - S 0:00.13 /usr/sbin/httpd-gk -N 5797 - I 0:00.10 /usr/sbin/httpd --config /jail/var/etc/httpd.conf To summarize: If HTTP/HTTPS services are disabled, there is no impact from this vulnerability. If HTTP/HTTPS services are enabled and J-Web is not in use, this vulnerability has a CVSS score of 5.9 (CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:N/A:N). If J-Web is enabled, this vulnerability has a CVSS score of 8.8 (CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H). Juniper SIRT has received a single report of this vulnerability being exploited in the wild. Out of an abundance of caution, we are notifying customers so they can take appropriate actions. Indicators of Compromise: The /var/log/httpd.log may have indicators that commands have injected or files being accessed. The device administrator can look for these indicators by searching for the string patterns \"=;&\" or \"%3b&\" in /var/log/httpd.log, using the following command: user@device> show log httpd.log | match \"=;&|=%3b&\" If this command returns any output, it might be an indication of malicious attempts or simply scanning activities. Rotated logs should also be reviewed, using the following command: user@device> show log httpd.log.0.gz | match \"=;&|=%3b&\" user@device> show log httpd.log.1.gz | match \"=;&|=%3b&\" Note that a skilled attacker would likely remove these entries from the local log file, thus effectively eliminating any reliable signature that the device had been attacked. This issue affects Juniper Networks Junos OS 12.3 versions prior to 12.3R12-S16; 12.3X48 versions prior to 12.3X48-D101, 12.3X48-D105; 14.1X53 versions prior to 14.1X53-D54; 15.1 versions prior to 15.1R7-S7; 15.1X49 versions prior to 15.1X49-D211, 15.1X49-D220; 16.1 versions prior to 16.1R7-S8; 17.2 versions prior to 17.2R3-S4; 17.3 versions prior to 17.3R3-S8; 17.4 versions prior to 17.4R2-S11, 17.4R3-S2; 18.1 versions prior to 18.1R3-S10; 18.2 versions prior to 18.2R2-S7, 18.2R3-S4; 18.3 versions prior to 18.3R2-S4, 18.3R3-S2; 18.4 versions prior to 18.4R1-S7, 18.4R3-S2 ; 18.4 version 18.4R2 and later versions; 19.1 versions prior to 19.1R1-S5, 19.1R3-S1; 19.1 version 19.1R2 and later versions; 19.2 versions prior to 19.2R2; 19.3 versions prior to 19.3R2-S3, 19.3R3; 19.4 versions prior to 19.4R1-S2, 19.4R2; 20.1 versions prior to 20.1R1-S1, 20.1R2.",
+          "published_date": "2020-05-04T04:45:10.890Z",
+          "last_modified": "2024-11-20T23:41:02.493Z",
+          "vulnStatus": "Modified",
+          "baseScore": 8.8,
+          "baseSeverity": "High",
+          "oemUrl": "https://kb.juniper.net/JSA11021",
+          "_id": "6753452f723417c1ddaf783b"
+        },
+        {
+          "cve_id": "CVE-2020-1673",
+          "vulnerabilityDescription": "Insufficient Cross-Site Scripting (XSS) protection in Juniper Networks J-Web and web based (HTTP/HTTPS) services allows an unauthenticated attacker to hijack the target user's HTTP/HTTPS session and perform administrative actions on the Junos device as the targeted user. This issue only affects Juniper Networks Junos OS devices with HTTP/HTTPS services enabled such as J-Web, Web Authentication, Dynamic-VPN (DVPN), Firewall Authentication Pass-Through with Web-Redirect, and Zero Touch Provisioning (ZTP). Junos OS devices with HTTP/HTTPS services disabled are not affected. If HTTP/HTTPS services are enabled, the following command will show the httpd processes: user@device> show system processes | match http 5260 - S 0:00.13 /usr/sbin/httpd-gk -N 5797 - I 0:00.10 /usr/sbin/httpd --config /jail/var/etc/httpd.conf In order to successfully exploit this vulnerability, the attacker needs to convince the device administrator to take action such as clicking the crafted URL sent via phishing email or convince the administrator to input data in the browser console. This issue affects Juniper Networks Junos OS: 18.1 versions prior to 18.1R3-S1; 18.2 versions prior to 18.2R3-S5; 18.3 versions prior to 18.3R2-S4, 18.3R3-S2; 18.4 versions prior to 18.4R2-S5, 18.4R3-S2; 19.1 versions prior to 19.1R2-S2, 19.1R3-S1; 19.2 versions prior to 19.2R1-S5, 19.2R2; 19.3 versions prior to 19.3R2-S4, 19.3R3; 19.4 versions prior to 19.4R1-S3, 19.4R2; 20.1 versions prior to 20.1R1-S2, 20.1R2. This issue does not affect Juniper Networks Junos OS prior to 18.1R1.",
+          "published_date": "2020-10-16T15:45:13.223Z",
+          "last_modified": "2024-11-20T23:41:08.093Z",
+          "vulnStatus": "Modified",
+          "baseScore": 8.8,
+          "baseSeverity": "High",
+          "oemUrl": "https://kb.juniper.net/JSA11070",
+          "_id": "6753452f723417c1ddaf783c"
+        }
+      ]
+    }
+  }
