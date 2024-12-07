@@ -21,12 +21,8 @@ const oemList = {
 // GET: Retrieve OEM list based on IT/OT
 router.get("/oem-list", (req, res) => {
   try {
-    const { type } = req.query; // "IT" or "OT"
-    if (!type || !oemList[type]) {
-      return res.status(400).json({ error: "Invalid type. Valid values are 'IT' or 'OT'." });
-    }
-    res.json(oemList[type]);
-  } catch (error) {
+    res.json(oemList);
+    } catch (error) {
     console.error("Error fetching OEM list:", error);
     res.status(500).json({ error: "Server error" });
   }
@@ -59,6 +55,7 @@ router.post("/add-product", async (req, res) => {
       // Fetch existing monitor record
       const monitorRecord = await MonitorScan.findOne({ userId, vendorId });
       const totalProducts = monitorRecord ? monitorRecord.products.length : 0;
+      console.log(totalProducts);
   
       if (totalProducts >= planLimit) {
         return res.status(400).json({ error: `Product limit exceeded. Max allowed: ${planLimit}.` });
@@ -81,7 +78,7 @@ router.post("/add-product", async (req, res) => {
         await newMonitorRecord.save();
       }
   
-      res.json({ message: "Product added successfully." });
+      res.json({ message: "Product added successfully." ,data: planLimit-totalProducts});
     } catch (error) {
       console.error("Error in add-product route:", error.message, error.stack);
       res.status(500).json({ error: "Server error", details: error.message });
