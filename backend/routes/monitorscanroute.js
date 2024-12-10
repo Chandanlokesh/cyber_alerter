@@ -1,12 +1,17 @@
+// Required modules
 const express = require("express");
 const { spawn } = require("child_process");
 const router = express.Router();
+const { v4: uuidv4 } = require("uuid");
+const path = require("path");
+
+// Models
 const User = require("../models/users_db");
 const Product = require("../models/product_data_db");
 const Vendor = require("../models/vendors_db");
-const VulnList = require("../models/vuln_list");
-const { v4: uuidv4 } = require("uuid");
-const path = require("path");
+// const VulnList = require("../models/vuln_list");
+const ScanResult = require("../models/vuln_list"); // Assuming a model for scan results exists
+
 // Route to get vendors by category
 router.get("/vendors/:category", async (req, res) => {
   try {
@@ -46,12 +51,10 @@ router.post("/products", async (req, res) => {
 
     // Check product count for the user
     const existingProducts = await Product.find({ userId });
-    const remainingSlots = maxLimit - existingProducts.length;
+    const remainingSlots = maxLimit - existingProducts.length - 1;
 
     if (remainingSlots <= 0) {
-      return res
-        .status(403)
-        .json({ error: "Product limit reached for this user." });
+      return res.status(403).json({ error: "Product limit reached for this user." });
     }
 
     // Create a new product
@@ -96,6 +99,7 @@ router.get("/products/:userId", async (req, res) => {
   }
 });
 
+// Route to monitor products
 router.post("/monitor", async (req, res) => {
   try {
     const { userId, productIds } = req.body;
@@ -116,12 +120,11 @@ router.post("/monitor", async (req, res) => {
       // Prepare payload for Python script
       const payload = {
         userId,
-        userEmail: User.email,
         productId,
         vendorName: product.vendorName,
         productName: product.productName,
       };
-      console.log("Payload:", payload);
+
       // Spawn the Python process
       const pythonProcess = spawn("python", ["./monitor_py/dummy_script.py", JSON.stringify(payload)]);
 
@@ -145,47 +148,51 @@ router.post("/monitor", async (req, res) => {
         });
       });
 
+      // Save the Python output into the vuln_list collection
+      const { cveIds, publishedDates, description, mitigations } = pythonOutput;
+
+      const scanData = new ScanResult({
+        productId,
+        cveIds,
+        publishedDates,
+        description,
+        mitigations,
+        totalVulnerabilities: cveIds.length,
+      });
+
+      await scanData.save();
+
       results.push({ productId, data: pythonOutput });
     }
 
-    res.status(200).json({ message: "Data fetched successfully.", results });
+    res.status(200).json({ message: "Data processed and saved successfully.", results });
   } catch (error) {
-    console.error("Error triggering Python script:", error.message);
+    console.error("Error processing monitor data:", error.message);
     res.status(500).json({ error: "Server error", details: error.message });
   }
 });
 
 // Route to fetch scan details
-
 router.get("/scan_details/:productId", async (req, res) => {
   try {
-    console.log(`[DEBUG] Incoming GET request - Method: ${req.method}, URL: ${req.url}`);
-
     const { productId } = req.params;
-    console.log("[DEBUG] Request Parameters:", req.params);
 
     if (!productId) {
-      console.error("[ERROR] No Product ID provided in request.");
       return res.status(400).json({ error: "Product ID is required." });
     }
 
-    console.log(`[DEBUG] Attempting to query the database for scan details with productId: ${productId}`);
-
-    // Query the database for scan details in the 'vuln_list' collection
+    // Query the database for scan details
     const scanDetails = await ScanResult.findOne({ productId });
 
     if (!scanDetails) {
-      console.warn(`[WARN] No scan details found for product ID: ${productId}`);
       return res.status(404).json({ error: "No scan details found for this product." });
     }
 
-    console.log(`[DEBUG] Found scan details:`, scanDetails);
     res.status(200).json({ message: "Scan details fetched successfully.", scanDetails });
   } catch (error) {
-    console.error("[ERROR] Database query or server error occurred:", error.message);
+    console.error("Error fetching scan details:", error.message);
     res.status(500).json({ error: "Internal Server Error", details: error.message });
   }
 });
-
 
 module.exports = router;
