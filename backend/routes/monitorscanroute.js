@@ -3,10 +3,28 @@ const { spawn } = require("child_process");
 const router = express.Router();
 const User = require("../models/users_db");
 const Product = require("../models/product_data_db");
+const Vendor = require("../models/vendors_db");
 const VulnList = require("../models/vuln_list");
 const { v4: uuidv4 } = require("uuid");
 const path = require("path");
+// Route to get vendors by category
+router.get("/vendors/:category", async (req, res) => {
+  try {
+    const { category } = req.params;
 
+    // Fetch vendors for the given category
+    const vendors = await Vendor.find({ category });
+
+    if (vendors.length === 0) {
+      return res.status(404).json({ message: "No vendors found for this category." });
+    }
+
+    res.status(200).json({ vendors });
+  } catch (error) {
+    console.error("Error fetching vendors:", error.message);
+    res.status(500).json({ error: "Server error", details: error.message });
+  }
+});
 
 // Route to add a product
 router.post("/products", async (req, res) => {
@@ -98,6 +116,7 @@ router.post("/monitor", async (req, res) => {
       // Prepare payload for Python script
       const payload = {
         userId,
+        userEmail: User.email,
         productId,
         vendorName: product.vendorName,
         productName: product.productName,
