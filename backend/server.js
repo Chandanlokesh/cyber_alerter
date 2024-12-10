@@ -11,28 +11,26 @@ app.use(express.urlencoded({ extended: true }));
 // Routes
 const userRoutes = require('./routes/users');
 const quickScanRoutes = require('./routes/quickscanroute');
-const monitorScanRoutes = require('./routes/monitorschanroute');
+const monitorScanRoutes = require('./routes/monitorscanroute');
 
-
-app.use('/users', userRoutes);
-app.use('/quickscan', quickScanRoutes);
-app.use('/monitorscan', monitorScanRoutes);
-
-
-
+// Use Routes
+app.use('/users', userRoutes); // For user-related operations
+app.use('/quickscan', quickScanRoutes); // For Quick Scan functionality
+app.use('/monitorscan', monitorScanRoutes); // For Monitor Scan functionality
+app.use((req, res, next) => {
+  if (req.method === "GET") {
+    req.body = undefined;
+  }
+  next();
+});
 
 // Default route
 app.get('/', (req, res) => {
   res.send('Cyber Alerter Backend is running!');
 });
 
-// Models
-const User = require('./models/users_db');
-
-
-
 // MongoDB connection
-const mongoURI = 'mongodb://localhost:27017/cyber_alerter';  // Replace with your actual URI
+const mongoURI = 'mongodb://localhost:27017/cyber_alerter';  
 mongoose.connect(mongoURI, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => {
     console.log('Database connected successfully');
