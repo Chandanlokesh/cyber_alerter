@@ -1,0 +1,192 @@
+[
+    {
+        "cve_id": "CVE-2024-10100",
+        "vulnerabilityDescription": "A path traversal vulnerability exists in binary-husky/gpt_academic version 3.83. The vulnerability is due to improper handling of the file parameter, which is open to path traversal through URL encoding. This allows attackers to view any file on the host system, including sensitive files such as critical application files, SSH keys, API keys, and configuration values.",
+        "published_date": "2024-10-17T19:15:21.533",
+        "last_modified": "2024-11-04T19:15:05.297",
+        "vulnStatus": "Awaiting Analysis",
+        "baseScore": "6.5",
+        "baseSeverity": "MEDIUM",
+        "oemUrl": "https://huntr.com/bounties/e58a0fb4-2b1d-49ef-b32e-bb62659a6f99",
+        "mitigation strategy": {
+            "details": [
+                "",
+                "1. **Update/Patch**: Apply vendor-provided security updates immediately.",
+                "2. **Network Segmentation**: Isolate affected systems to limit lateral movement.",
+                "3. **Input Validation**: Enforce strict input validation on user/data inputs.",
+                "4. **Monitoring**: Enhance logging and monitoring for suspicious activity."
+            ]
+        }
+    },
+    {
+        "cve_id": "CVE-2024-7589",
+        "vulnerabilityDescription": "A signal handler in sshd(8) may call a logging function that is not async-signal-safe.  The signal handler is invoked when a client does not authenticate within the LoginGraceTime seconds (120 by default).  This signal handler executes in the context of the sshd(8)'s privileged code, which is not sandboxed and runs with full root privileges.\n\nThis issue is another instance of the problem in CVE-2024-6387 addressed by FreeBSD-SA-24:04.openssh.  The faulty code in this case is from the integration of blacklistd in OpenSSH in FreeBSD.\n\nAs a result of calling functions that are not async-signal-safe in the privileged sshd(8) context, a race condition exists that a determined attacker may be able to exploit to allow an unauthenticated remote code execution as root.",
+        "published_date": "2024-08-12T13:38:44.203",
+        "last_modified": "2024-11-21T09:51:46.310",
+        "vulnStatus": "Modified",
+        "baseScore": "8.1",
+        "baseSeverity": "HIGH",
+        "oemUrl": "https://security.freebsd.org/advisories/FreeBSD-SA-24:08.openssh.asc",
+        "mitigation strategy": {
+            "details": [
+                "",
+                "1. **Patch**: Apply vendor-released security updates ASAP.",
+                "2. **Network Segmentation**: Isolate affected systems from sensitive networks.",
+                "3. **Firewall Rules**: Block unnecessary inbound/outbound traffic to/from affected ports/services.",
+                "4. **Monitor for Anomalies**: Enhance logging and surveillance for potential exploit attempts."
+            ]
+        }
+    },
+    {
+        "cve_id": "CVE-2024-40629",
+        "vulnerabilityDescription": "JumpServer is an open-source Privileged Access Management (PAM) tool that provides DevOps and IT teams with on-demand and secure access to SSH, RDP, Kubernetes, Database and RemoteApp endpoints through a web browser. An attacker can exploit the Ansible playbook to write arbitrary files, leading to remote code execution (RCE) in the Celery container. The Celery container runs as root and has database access, allowing an attacker to steal all secrets for hosts, create a new JumpServer account with admin privileges, or manipulate the database in other ways. This issue has been patched in release versions 3.10.12 and 4.0.0. It is recommended to upgrade the safe versions. There are no known workarounds for this vulnerability.",
+        "published_date": "2024-07-18T17:15:04.613",
+        "last_modified": "2024-11-21T09:31:23.640",
+        "vulnStatus": "Modified",
+        "baseScore": "10.0",
+        "baseSeverity": "CRITICAL",
+        "oemUrl": "https://github.com/jumpserver/jumpserver/security/advisories/GHSA-3wgp-q8m7-v33v",
+        "mitigation strategy": {
+            "details": [
+                "",
+                "1. **Patch**: Apply vendor-provided security update ASAP.",
+                "2. **Network Segmentation**: Isolate affected systems from sensitive networks.",
+                "3. **Firewall Rules**: Block unnecessary inbound/outbound traffic to/from affected ports/services.",
+                "4. **Monitor for Anomalies**: Enhance logging and intrusion detection."
+            ]
+        }
+    },
+    {
+        "cve_id": "CVE-2024-40628",
+        "vulnerabilityDescription": "JumpServer is an open-source Privileged Access Management (PAM) tool that provides DevOps and IT teams with on-demand and secure access to SSH, RDP, Kubernetes, Database and RemoteApp endpoints through a web browser. An attacker can exploit the ansible playbook to read arbitrary files in the celery container, leading to sensitive information disclosure. The Celery container runs as root and has database access, allowing the attacker to steal all secrets for hosts, create a new JumpServer account with admin privileges, or manipulate the database in other ways. This issue has been addressed in release versions 3.10.12 and 4.0.0. It is recommended to upgrade the safe versions. There is no known workarounds for this vulnerability.",
+        "published_date": "2024-07-18T17:15:04.370",
+        "last_modified": "2024-11-21T09:31:23.503",
+        "vulnStatus": "Modified",
+        "baseScore": "10.0",
+        "baseSeverity": "CRITICAL",
+        "oemUrl": "https://github.com/jumpserver/jumpserver/security/advisories/GHSA-rpf7-g4xh-84v9",
+        "mitigation strategy": {
+            "details": [
+                "",
+                "1. **Patch**: Apply vendor-released security updates ASAP.",
+                "2. **Network Segmentation**: Isolate affected systems from sensitive networks.",
+                "3. **Firewall Rules**: Block unnecessary inbound/outbound traffic to/from affected ports/services.",
+                "4. **Monitor for Anomalies**: Enhance logging and intrusion detection."
+            ]
+        }
+    },
+    {
+        "cve_id": "CVE-2024-6409",
+        "vulnerabilityDescription": "A race condition vulnerability was discovered in how signals are handled by OpenSSH's server (sshd). If a remote attacker does not authenticate within a set time period, then sshd's SIGALRM handler is called asynchronously. However, this signal handler calls various functions that are not async-signal-safe, for example, syslog(). As a consequence of a successful attack, in the worst case scenario, an attacker may be able to perform a remote code execution (RCE) as an unprivileged user running the sshd server.",
+        "published_date": "2024-07-08T18:15:09.487",
+        "last_modified": "2024-11-21T09:49:35.850",
+        "vulnStatus": "Awaiting Analysis",
+        "baseScore": "7.0",
+        "baseSeverity": "HIGH",
+        "oemUrl": "https://access.redhat.com/errata/RHSA-2024:4457",
+        "mitigation strategy": {
+            "details": [
+                "",
+                "1. **Update/Patch**: Apply vendor-released security updates ASAP.",
+                "2. **Network Segmentation**: Isolate affected systems/devices from sensitive networks.",
+                "3. **Input Validation**: Enforce strict input validation on user-supplied data.",
+                "4. **Monitoring**: Enhance logging and monitoring for suspicious activity."
+            ]
+        }
+    },
+    {
+        "cve_id": "CVE-2024-39930",
+        "vulnerabilityDescription": "The built-in SSH server of Gogs through 0.13.0 allows argument injection in internal/ssh/ssh.go, leading to remote code execution. Authenticated attackers can exploit this by opening an SSH connection and sending a malicious --split-string env request if the built-in SSH server is activated. Windows installations are unaffected.",
+        "published_date": "2024-07-04T16:15:02.277",
+        "last_modified": "2024-11-21T09:28:35.910",
+        "vulnStatus": "Awaiting Analysis",
+        "baseScore": "9.9",
+        "baseSeverity": "CRITICAL",
+        "oemUrl": "https://github.com/gogs/gogs/releases",
+        "mitigation strategy": {
+            "details": [
+                "",
+                "1. **Patch**: Apply vendor-provided security updates ASAP.",
+                "2. **Network Segmentation**: Isolate affected systems from sensitive networks.",
+                "3. **Firewall Rules**: Block unnecessary inbound/outbound traffic to/from affected ports.",
+                "4. **Monitor for Anomalies**: Enhance logging and surveillance for potential exploit attempts."
+            ]
+        }
+    },
+    {
+        "cve_id": "CVE-2024-6387",
+        "vulnerabilityDescription": "A security regression (CVE-2006-5051) was discovered in OpenSSH's server (sshd). There is a race condition which can lead sshd to handle some signals in an unsafe manner. An unauthenticated, remote attacker may be able to trigger it by failing to authenticate within a set time period.",
+        "published_date": "2024-07-01T13:15:06.467",
+        "last_modified": "2024-11-21T09:49:33.050",
+        "vulnStatus": "Modified",
+        "baseScore": "8.1",
+        "baseSeverity": "HIGH",
+        "oemUrl": "https://access.redhat.com/errata/RHSA-2024:4312",
+        "mitigation strategy": {
+            "details": [
+                "",
+                "1. **Update/Patch**: Apply vendor-released security updates immediately.",
+                "2. **Network Segmentation**: Isolate affected systems to limit lateral movement.",
+                "3. **Input Validation**: Enforce strict input validation on user-supplied data.",
+                "4. **Monitoring**: Enhance logging and monitoring for suspicious activity."
+            ]
+        }
+    },
+    {
+        "cve_id": "CVE-2024-29951",
+        "vulnerabilityDescription": "Brocade SANnav before v2.3.1 and v2.3.0a uses the SHA-1 hash in internal SSH ports that are not open to remote connection.",
+        "published_date": "2024-04-17T20:15:08.060",
+        "last_modified": "2024-11-21T09:08:41.157",
+        "vulnStatus": "Awaiting Analysis",
+        "baseScore": "5.7",
+        "baseSeverity": "MEDIUM",
+        "oemUrl": "https://support.broadcom.com/external/content/SecurityAdvisories/0/23237",
+        "mitigation strategy": {
+            "details": [
+                "",
+                "1. **Patch**: Apply latest vendor patch ASAP.",
+                "2. **Firewall Rule**: Block incoming traffic on affected ports until patched.",
+                "3. **Network Segmentation**: Isolate vulnerable systems from sensitive networks.",
+                "4. **Monitoring**: Enhance logging and monitoring for suspicious activity."
+            ]
+        }
+    },
+    {
+        "cve_id": "CVE-2023-51385",
+        "vulnerabilityDescription": "In ssh in OpenSSH before 9.6, OS command injection might occur if a user name or host name has shell metacharacters, and this name is referenced by an expansion token in certain situations. For example, an untrusted Git repository can have a submodule with shell metacharacters in a user name or host name.",
+        "published_date": "2023-12-18T19:15:08.773",
+        "last_modified": "2024-11-21T08:37:59.990",
+        "vulnStatus": "Modified",
+        "baseScore": "6.5",
+        "baseSeverity": "MEDIUM",
+        "oemUrl": "http://seclists.org/fulldisclosure/2024/Mar/21",
+        "mitigation strategy": {
+            "details": [
+                "",
+                "1. **Update/Patch**: Apply vendor-released patch/update immediately.",
+                "2. **Network Segmentation**: Isolate affected systems from the internet and sensitive network areas.",
+                "3. **Input Validation**: Enhance input validation for relevant system inputs.",
+                "4. **Monitor for Anomalies**: Closely monitor system logs for suspicious activity."
+            ]
+        }
+    },
+    {
+        "cve_id": "CVE-2023-51384",
+        "vulnerabilityDescription": "In ssh-agent in OpenSSH before 9.6, certain destination constraints can be incompletely applied. When destination constraints are specified during addition of PKCS#11-hosted private keys, these constraints are only applied to the first key, even if a PKCS#11 token returns multiple keys.",
+        "published_date": "2023-12-18T19:15:08.720",
+        "last_modified": "2024-11-21T08:37:59.780",
+        "vulnStatus": "Modified",
+        "baseScore": "5.5",
+        "baseSeverity": "MEDIUM",
+        "oemUrl": "http://seclists.org/fulldisclosure/2024/Mar/21",
+        "mitigation strategy": {
+            "details": [
+                "",
+                "1. **Update/Patch**: Apply vendor-released security updates immediately.",
+                "2. **Network Segmentation**: Isolate affected systems from the internet and sensitive networks.",
+                "3. **Input Validation**: Enforce strict input validation on user-supplied data.",
+                "4. **Monitor for Anomalies**: Enhance logging and monitoring for suspicious activity."
+            ]
+        }
+    }
+]

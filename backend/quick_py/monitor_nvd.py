@@ -117,13 +117,16 @@ class QuickScan:
                     "cve_id": cve_path.get("id", "N/A"),
                     "error": f"Error parsing vulnerbilities: {e}"
                 }
+            
             parsed_data_list.append(parsed_data)
+
         # return parsed_data
         return parsed_data_list
 
-# # async def main():
-# runScan = QuickScan("NVIDIA")
-# data = asyncio.run(runScan.parse_formatted_data())
-# print(data)
-# # if __name__ == "__main__":
-# #     asyncio.run(main)
+async def main():
+    product_name = "NVIDIA"
+    runScan = QuickScan(product_name=product_name)
+    data = asyncio.run(runScan.parse_formatted_data())  
+    print(data)
+if __name__ == "__main__":
+    asyncio.run(main)
