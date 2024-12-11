@@ -1,0 +1,187 @@
+[
+    {
+        "cve_id": "CVE-2024-0139",
+        "vulnerabilityDescription": "NVIDIA Base Command Manager and Bright Cluster Manager for Linux contain an insecure temporary file vulnerability. A successful exploit of this vulnerability might lead to denial of service.",
+        "published_date": "2024-12-06T20:15:23.763",
+        "last_modified": "2024-12-06T20:15:23.763",
+        "vulnStatus": "Received",
+        "baseScore": "4.4",
+        "baseSeverity": "MEDIUM",
+        "oemUrl": "https://nvidia.custhelp.com/app/answers/detail/a_id/5600",
+        "mitigation strategy": {
+            "details": [
+                "",
+                "Apply vendor-provided patches/updates immediately",
+                "Enable WAF rules to block suspicious traffic patterns",
+                "Restrict access to affected system/components via firewall rules",
+                "Monitor for unusual system behavior/anomalies"
+            ]
+        }
+    },
+    {
+        "cve_id": "CVE-2024-0130",
+        "vulnerabilityDescription": "NVIDIA UFM Enterprise, UFM Appliance, and UFM CyberAI contain a vulnerability where an attacker can cause an improper authentication issue by sending a malformed request through the Ethernet management interface. A successful exploit of this vulnerability might lead to escalation of privileges, data tampering, denial of service, and information disclosure.",
+        "published_date": "2024-12-06T20:15:23.543",
+        "last_modified": "2024-12-06T20:15:23.543",
+        "vulnStatus": "Received",
+        "baseScore": "8.8",
+        "baseSeverity": "HIGH",
+        "oemUrl": "https://nvidia.custhelp.com/app/answers/detail/a_id/5584",
+        "mitigation strategy": {
+            "details": [
+                "Update to latest patched version",
+                "Enable WAF rules to block suspicious traffic",
+                "Restrict access to affected component",
+                "Monitor for unusual system behavior and network activity"
+            ]
+        }
+    },
+    {
+        "cve_id": "CVE-2024-0138",
+        "vulnerabilityDescription": "NVIDIA Base Command Manager contains a missing authentication vulnerability in the CMDaemon component. A successful exploit of this vulnerability might lead to code execution, denial of service, escalation of privileges, information disclosure, and data tampering.",
+        "published_date": "2024-11-23T00:15:04.367",
+        "last_modified": "2024-11-23T00:15:04.367",
+        "vulnStatus": "Awaiting Analysis",
+        "baseScore": "9.8",
+        "baseSeverity": "CRITICAL",
+        "oemUrl": "https://nvidia.custhelp.com/app/answers/detail/a_id/5595",
+        "mitigation strategy": {
+            "details": [
+                "Apply vendor-provided patches/updates immediately",
+                "Enable WAF rules to block suspicious traffic patterns",
+                "Restrict access to affected services until patched",
+                "Monitor system logs for exploitation attempts"
+            ]
+        }
+    },
+    {
+        "cve_id": "CVE-2024-0122",
+        "vulnerabilityDescription": "NVIDIA Delegated Licensing Service for all appliance platforms contains a vulnerability where an attacker may cause an unauthorized action. A successful exploit of this vulnerability may lead to partial denial of service and confidential information disclosure.",
+        "published_date": "2024-11-23T00:15:04.223",
+        "last_modified": "2024-11-23T00:15:04.223",
+        "vulnStatus": "Awaiting Analysis",
+        "baseScore": "7.6",
+        "baseSeverity": "HIGH",
+        "oemUrl": "https://nvidia.custhelp.com/app/answers/detail/a_id/5570",
+        "mitigation strategy": {
+            "details": [
+                "Update to latest patched version",
+                "Enable Web Application Firewall (WAF)",
+                "Restrict access to affected endpoints",
+                "Monitor for suspicious network activity",
+                "Apply recommended vendor-specific workarounds"
+            ]
+        }
+    },
+    {
+        "cve_id": "CVE-2024-50252",
+        "vulnerabilityDescription": "In the Linux kernel, the following vulnerability has been resolved:\n\nmlxsw: spectrum_ipip: Fix memory leak when changing remote IPv6 address\n\nThe device stores IPv6 addresses that are used for encapsulation in\nlinear memory that is managed by the driver.\n\nChanging the remote address of an ip6gre net device never worked\nproperly, but since cited commit the following reproducer [1] would\nresult in a warning [2] and a memory leak [3]. The problem is that the\nnew remote address is never added by the driver to its hash table (and\ntherefore the device) and the old address is never removed from it.\n\nFix by programming the new address when the configuration of the ip6gre\nnet device changes and removing the old one. If the address did not\nchange, then the above would result in increasing the reference count of\nthe address and then decreasing it.\n\n[1]\n # ip link add name bla up type ip6gre local 2001:db8:1::1 remote 2001:db8:2::1 tos inherit ttl inherit\n # ip link set dev bla type ip6gre remote 2001:db8:3::1\n # ip link del dev bla\n # devlink dev reload pci/0000:01:00.0\n\n[2]\nWARNING: CPU: 0 PID: 1682 at drivers/net/ethernet/mellanox/mlxsw/spectrum.c:3002 mlxsw_sp_ipv6_addr_put+0x140/0x1d0\nModules linked in:\nCPU: 0 UID: 0 PID: 1682 Comm: ip Not tainted 6.12.0-rc3-custom-g86b5b55bc835 #151\nHardware name: Nvidia SN5600/VMOD0013, BIOS 5.13 05/31/2023\nRIP: 0010:mlxsw_sp_ipv6_addr_put+0x140/0x1d0\n[...]\nCall Trace:\n <TASK>\n mlxsw_sp_router_netdevice_event+0x55f/0x1240\n notifier_call_chain+0x5a/0xd0\n call_netdevice_notifiers_info+0x39/0x90\n unregister_netdevice_many_notify+0x63e/0x9d0\n rtnl_dellink+0x16b/0x3a0\n rtnetlink_rcv_msg+0x142/0x3f0\n netlink_rcv_skb+0x50/0x100\n netlink_unicast+0x242/0x390\n netlink_sendmsg+0x1de/0x420\n ____sys_sendmsg+0x2bd/0x320\n ___sys_sendmsg+0x9a/0xe0\n __sys_sendmsg+0x7a/0xd0\n do_syscall_64+0x9e/0x1a0\n entry_SYSCALL_64_after_hwframe+0x77/0x7f\n\n[3]\nunreferenced object 0xffff898081f597a0 (size 32):\n  comm \"ip\", pid 1626, jiffies 4294719324\n  hex dump (first 32 bytes):\n    20 01 0d b8 00 02 00 00 00 00 00 00 00 00 00 01   ...............\n    21 49 61 83 80 89 ff ff 00 00 00 00 01 00 00 00  !Ia.............\n  backtrace (crc fd9be911):\n    [<00000000df89c55d>] __kmalloc_cache_noprof+0x1da/0x260\n    [<00000000ff2a1ddb>] mlxsw_sp_ipv6_addr_kvdl_index_get+0x281/0x340\n    [<000000009ddd445d>] mlxsw_sp_router_netdevice_event+0x47b/0x1240\n    [<00000000743e7757>] notifier_call_chain+0x5a/0xd0\n    [<000000007c7b9e13>] call_netdevice_notifiers_info+0x39/0x90\n    [<000000002509645d>] register_netdevice+0x5f7/0x7a0\n    [<00000000c2e7d2a9>] ip6gre_newlink_common.isra.0+0x65/0x130\n    [<0000000087cd6d8d>] ip6gre_newlink+0x72/0x120\n    [<000000004df7c7cc>] rtnl_newlink+0x471/0xa20\n    [<0000000057ed632a>] rtnetlink_rcv_msg+0x142/0x3f0\n    [<0000000032e0d5b5>] netlink_rcv_skb+0x50/0x100\n    [<00000000908bca63>] netlink_unicast+0x242/0x390\n    [<00000000cdbe1c87>] netlink_sendmsg+0x1de/0x420\n    [<0000000011db153e>] ____sys_sendmsg+0x2bd/0x320\n    [<000000003b6d53eb>] ___sys_sendmsg+0x9a/0xe0\n    [<00000000cae27c62>] __sys_sendmsg+0x7a/0xd0",
+        "published_date": "2024-11-09T11:15:10.973",
+        "last_modified": "2024-11-14T18:08:17.857",
+        "vulnStatus": "Analyzed",
+        "baseScore": "5.5",
+        "baseSeverity": "MEDIUM",
+        "oemUrl": "https://git.kernel.org/stable/c/12ae97c531fcd3bfd774d4dfeaeac23eafe24280",
+        "mitigation strategy": {
+            "details": [
+                "",
+                "Patch**: Apply vendor-released security update immediately",
+                "Network Segmentation**: Isolate affected systems until patched",
+                "Firewall Rules**: Block incoming traffic on vulnerable ports",
+                "Monitoring**: Enhance logging for suspicious activity detection"
+            ]
+        }
+    },
+    {
+        "cve_id": "CVE-2024-0134",
+        "vulnerabilityDescription": "NVIDIA Container Toolkit and NVIDIA GPU Operator for Linux contain a UNIX vulnerability where a specially crafted container image can lead to the creation of unauthorized files on the host. The name and location of the files cannot be controlled by an attacker. A successful exploit of this vulnerability might lead to data tampering.",
+        "published_date": "2024-11-05T19:15:05.203",
+        "last_modified": "2024-11-08T15:53:40.200",
+        "vulnStatus": "Analyzed",
+        "baseScore": "4.1",
+        "baseSeverity": "MEDIUM",
+        "oemUrl": "https://nvidia.custhelp.com/app/answers/detail/a_id/5585",
+        "mitigation strategy": {
+            "details": [
+                "Update to latest patched version",
+                "Enable Web Application Firewall (WAF)",
+                "Restrict access to affected endpoints",
+                "Monitor for suspicious network activity",
+                "Validate user input to prevent exploitation"
+            ]
+        }
+    },
+    {
+        "cve_id": "CVE-2024-0106",
+        "vulnerabilityDescription": "NVIDIA ConnectX Host Firmware for the BlueField Data Processing Unit (DPU) contains a vulnerability where an attacker may cause an improper handling of insufficient privileges issue. A successful exploit of this vulnerability may lead to denial of service, data tampering, and limited information disclosure.",
+        "published_date": "2024-11-01T06:15:12.883",
+        "last_modified": "2024-11-01T12:57:03.417",
+        "vulnStatus": "Awaiting Analysis",
+        "baseScore": "8.7",
+        "baseSeverity": "HIGH",
+        "oemUrl": "https://nvidia.custhelp.com/app/answers/detail/a_id/5562",
+        "mitigation strategy": {
+            "details": [
+                "Apply vendor-provided patches immediately",
+                "Enable Web Application Firewall (WAF) rules to filter suspicious traffic",
+                "Limit access to affected services via network segmentation and ACLs",
+                "Monitor for unusual system behavior"
+            ]
+        }
+    },
+    {
+        "cve_id": "CVE-2024-0105",
+        "vulnerabilityDescription": "NVIDIA ConnectX Firmware contains a vulnerability where an attacker may cause an improper handling of insufficient privileges issue. A successful exploit of this vulnerability may lead to denial of service, data tampering, and limited information disclosure.",
+        "published_date": "2024-11-01T06:15:12.397",
+        "last_modified": "2024-11-01T12:57:03.417",
+        "vulnStatus": "Awaiting Analysis",
+        "baseScore": "8.9",
+        "baseSeverity": "HIGH",
+        "oemUrl": "https://nvidia.custhelp.com/app/answers/detail/a_id/5562",
+        "mitigation strategy": {
+            "details": [
+                "Apply Vendor Patch Immediately",
+                "Enable Firewall Rules to Block Unnecessary Ports",
+                "Implement Strict Input Validation",
+                "Limit Access to Affected System/Service to Trusted Users Only"
+            ]
+        }
+    },
+    {
+        "cve_id": "CVE-2024-0128",
+        "vulnerabilityDescription": "NVIDIA vGPU software contains a vulnerability in the Virtual GPU Manager that allows a user of the guest OS to access global resources. A successful exploit of this vulnerability might lead to information disclosure, data tampering, and escalation of privileges.",
+        "published_date": "2024-10-26T09:15:03.800",
+        "last_modified": "2024-10-28T13:58:09.230",
+        "vulnStatus": "Awaiting Analysis",
+        "baseScore": "7.1",
+        "baseSeverity": "HIGH",
+        "oemUrl": "https://nvidia.custhelp.com/app/answers/detail/a_id/5586",
+        "mitigation strategy": {
+            "details": [
+                "Update to latest patched version",
+                "Enable WAF with specific rule for CVE-2024-0128",
+                "Restrict access to affected component/service",
+                "Monitor for suspicious activity & network traffic"
+            ]
+        }
+    },
+    {
+        "cve_id": "CVE-2024-0127",
+        "vulnerabilityDescription": "NVIDIA vGPU software contains a vulnerability in the GPU kernel driver of the vGPU Manager for all supported hypervisors, where a user of the guest OS can cause an improper input validation by compromising the guest OS kernel. A successful exploit of this vulnerability might lead to code execution, escalation of privileges, data tampering, denial of service, and information disclosure.",
+        "published_date": "2024-10-26T09:15:02.957",
+        "last_modified": "2024-10-28T13:58:09.230",
+        "vulnStatus": "Awaiting Analysis",
+        "baseScore": "7.8",
+        "baseSeverity": "HIGH",
+        "oemUrl": "https://nvidia.custhelp.com/app/answers/detail/a_id/5586",
+        "mitigation strategy": {
+            "details": [
+                "Apply Vendor Patch/Update Immediately",
+                "Enable Web Application Firewall (WAF)",
+                "Restrict Access via IP Whitelisting",
+                "Monitor for Suspicious Network Activity",
+                "Validate User Inputs to Prevent Exploitation"
+            ]
+        }
+    }
+]
