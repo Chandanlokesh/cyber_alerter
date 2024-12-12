@@ -124,7 +124,7 @@ class QuickScan:
         return parsed_data_list
 
 async def main():
-    product_name = "NVIDIA"
+    product_name = "NVIDIA nemo"
     runScan = QuickScan(product_name=product_name)
     data = asyncio.run(runScan.parse_formatted_data())  
     print(data)
