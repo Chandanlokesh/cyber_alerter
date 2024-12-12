@@ -6,6 +6,7 @@ const CVESchema = new mongoose.Schema({
     description: { type: String }, // Combined description
     mitigations: [String], // Multiple mitigation strategies
     totalVulnerabilities: { type: Number }, // Count of CVEs
-    createdAt: { type: Date, default: Date.now },
+    Notification: {type:Number},
+    severity: { type: String, enum: ["Low", "Medium", "High", "Critical"] }
 });
 module.exports = mongoose.model("CVE", CVESchema); 

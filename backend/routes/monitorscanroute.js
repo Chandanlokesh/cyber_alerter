@@ -10,7 +10,8 @@ const User = require("../models/users_db");
 const Product = require("../models/product_data_db");
 const Vendor = require("../models/vendors_db");
 // const VulnList = require("../models/vuln_list");
-const ScanResult = require("../models/vuln_list"); // Assuming a model for scan results exists
+const ScanResult = require("../models/vuln_list");
+const CVE = require("../models/vuln_list");
 
 // Route to get vendors by category
 router.get("/vendors/:category", async (req, res) => {
@@ -21,7 +22,9 @@ router.get("/vendors/:category", async (req, res) => {
     const vendors = await Vendor.find({ category });
 
     if (vendors.length === 0) {
-      return res.status(404).json({ message: "No vendors found for this category." });
+      return res
+        .status(404)
+        .json({ message: "No vendors found for this category." });
     }
 
     res.status(200).json({ vendors });
@@ -54,7 +57,9 @@ router.post("/products", async (req, res) => {
     const remainingSlots = maxLimit - existingProducts.length - 1;
 
     if (remainingSlots <= 0) {
-      return res.status(403).json({ error: "Product limit reached for this user." });
+      return res
+        .status(403)
+        .json({ error: "Product limit reached for this user." });
     }
 
     // Create a new product
@@ -78,6 +83,7 @@ router.post("/products", async (req, res) => {
     console.error("Error adding product:", error);
     res.status(500).json({ error: "Internal server error." });
   }
+  
 });
 
 // Route to get products by userId
@@ -89,7 +95,9 @@ router.get("/products/:userId", async (req, res) => {
     const products = await Product.find({ userId });
 
     if (products.length === 0) {
-      return res.status(404).json({ message: "No products found for this user." });
+      return res
+        .status(404)
+        .json({ message: "No products found for this user." });
     }
 
     res.status(200).json({ products });
@@ -108,6 +116,12 @@ router.post("/monitor", async (req, res) => {
       return res.status(400).json({ error: "User ID and an array of Product IDs are required." });
     }
 
+    // Fetch user details to include email in the payload
+    const user = await User.findById(userId);
+    if (!user) {
+      return res.status(404).json({ error: "User not found." });
+    }
+
     const results = [];
     for (const productId of productIds) {
       // Fetch product details
@@ -120,6 +134,7 @@ router.post("/monitor", async (req, res) => {
       // Prepare payload for Python script
       const payload = {
         userId,
+        email: user.email, // Add user's email to payload
         productId,
         vendorName: product.vendorName,
         productName: product.productName,
@@ -148,16 +163,19 @@ router.post("/monitor", async (req, res) => {
         });
       });
 
-      // Save the Python output into the vuln_list collection
-      const { cveIds, publishedDates, description, mitigations } = pythonOutput;
+      // Extract data from Python output
+      const { cveIds, publishedDates, description, mitigations, severity, notification } = pythonOutput;
 
+      // Save the Python output into the vuln_list collection
       const scanData = new ScanResult({
         productId,
         cveIds,
         publishedDates,
         description,
         mitigations,
+        severity, // Save severity in the database
         totalVulnerabilities: cveIds.length,
+        notification
       });
 
       await scanData.save();
@@ -168,6 +186,16 @@ router.post("/monitor", async (req, res) => {
     res.status(200).json({ message: "Data processed and saved successfully.", results });
   } catch (error) {
     console.error("Error processing monitor data:", error.message);
+    res.status(500).json({ error: "Server error", details: error.message });
+  }
+});
+
+router.get("/notification", async (req, res) => {
+  try {
+    const notificationCount = await CVE.countDocuments({ Notification: { $gt: 0 } });
+    res.status(200).json({ notificationCount });
+  } catch (error) {
+    console.error("Error fetching notification count:", error.message);
     res.status(500).json({ error: "Server error", details: error.message });
   }
 });
@@ -185,13 +213,19 @@ router.get("/scan_details/:productId", async (req, res) => {
     const scanDetails = await ScanResult.findOne({ productId });
 
     if (!scanDetails) {
-      return res.status(404).json({ error: "No scan details found for this product." });
+      return res
+        .status(404)
+        .json({ error: "No scan details found for this product." });
     }
 
-    res.status(200).json({ message: "Scan details fetched successfully.", scanDetails });
+    res
+      .status(200)
+      .json({ message: "Scan details fetched successfully.", scanDetails });
   } catch (error) {
     console.error("Error fetching scan details:", error.message);
-    res.status(500).json({ error: "Internal Server Error", details: error.message });
+    res
+      .status(500)
+      .json({ error: "Internal Server Error", details: error.message });
   }
 });
 
